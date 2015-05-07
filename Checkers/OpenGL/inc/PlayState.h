@@ -20,7 +20,7 @@ public:
 	void Draw(Camera *_camera);
 	void SelectingCheckers();
 
-	void CheckingForMoves(BoardPiece *_piece);
+	void CheckingForMoves(glm::vec2 _gridPos);
 
 private:
 	GLFWwindow *m_pWindow;

@@ -76,12 +76,6 @@ void PlayState::SelectingCheckers()
 
 	for (auto piece : m_Board->GetBoardPieces())
 	{
-		//if(piece->GetPieceToMove())
-		//{
-		//	
-		//}
-			
-
 		if(piece->GetGridLocation() == glm::vec2(m_selectedRow, m_selectedCol))
 			piece->SetSelected(true);
 		else
@@ -94,8 +88,7 @@ void PlayState::SelectingCheckers()
 			if(piece->GetGridLocation() == glm::vec2(m_selectedRow, m_selectedCol) && piece->GetOcupied())
 			{
 				m_pieceToMove = &(*piece);
-				//pieceToMove = piece;
-				CheckingForMoves(piece);
+				CheckingForMoves(piece->GetGridLocation());
 			}
 
 			//If you press space on a potential move
@@ -107,6 +100,8 @@ void PlayState::SelectingCheckers()
 				piece->SetOcupied(m_pieceToMove->GetChecker());
 				//set the place the checker moved from to empty
 				m_pieceToMove->SetOcupied(NULL);
+				//check for a non existant square to deselect any potential moves
+				CheckingForMoves(glm::vec2(-1,-1));
 			}
 		}
 	}
@@ -114,21 +109,21 @@ void PlayState::SelectingCheckers()
 	
 }
 
-void PlayState::CheckingForMoves(BoardPiece *_piece)
+void PlayState::CheckingForMoves(glm::vec2 _gridPos)
 {
 	for (auto piece : m_Board->GetBoardPieces())
 	{
-		if(piece->GetGridLocation() == glm::vec2(_piece->GetGridLocation().x - 1, _piece->GetGridLocation().y + 1))
+		if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y + 1))
 		{
 			//[ ][X]
 			//[0][ ]
 			//[ ][ ]
 			piece->SetPotentialMove(true);
 		}
-		else if (piece->GetGridLocation() != glm::vec2(_piece->GetGridLocation().x + 1, _piece->GetGridLocation().y + 1))
+		else if (piece->GetGridLocation() != glm::vec2(_gridPos.x + 1, _gridPos.y + 1))
 			piece->SetPotentialMove(false);
 
-		if(piece->GetGridLocation() == glm::vec2(_piece->GetGridLocation().x + 1, _piece->GetGridLocation().y + 1))
+		if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y + 1))
 		{
 			//[ ][ ]
 			//[0][ ]

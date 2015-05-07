@@ -1,32 +1,5 @@
-﻿Build started 7/05/2015 3:36:11 PM.
-     1>Project "C:\Users\tommas.solarino\Desktop\Checkers\Checkers\OpenGL\OpenGL.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I./dep/glfw/include /I./dep/glm /I./dep/aieutilities /I./src /I./inc /I./dep/AntTweakBar/include /I./dep/FBXLoader_2012/include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D GLM_SWIZZLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\Application.cpp src\Board.cpp src\BoardPieces.cpp src\Checker.cpp src\Main.cpp src\PlayState.cpp
-         Application.cpp
-     1>c:\users\tommas.solarino\desktop\checkers\checkers\opengl\src\application.cpp(16): warning C4305: 'argument' : truncation from 'double' to 'float'
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         PlayState.cpp
-         Main.cpp
-         Checker.cpp
-         BoardPieces.cpp
-         Board.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\tommas.solarino\Desktop\Checkers\Checkers\Debug\OpenGL.exe" /INCREMENTAL /NOLOGO /LIBPATH:"./dep/glfw/lib-vc2012" /LIBPATH:./dep/AntTweakBar/lib /LIBPATH:./dep/FBXLoader_2012/lib opengl32.lib glfw3.lib AntTweakBar.lib FBXLoader_d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\tommas.solarino\Desktop\Checkers\Checkers\Debug\OpenGL.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\tommas.solarino\Desktop\Checkers\Checkers\Debug\OpenGL.lib" /MACHINE:X86 Debug\Gizmos_fix.obj
-         Debug\Application.obj
-         Debug\Board.obj
-         Debug\BoardPieces.obj
-         Debug\Checker.obj
-         Debug\PlayState.obj
-         Debug\ShaderLoader.obj
-         Debug\Camera.obj
-         Debug\FBX_Loader.obj
-         Debug\gl_core_4_4.obj
-         Debug\GUI_Bar.obj
-         Debug\Main.obj
-         OpenGL.vcxproj -> C:\Users\tommas.solarino\Desktop\Checkers\Checkers\Debug\OpenGL.exe
-     1>Done Building Project "C:\Users\tommas.solarino\Desktop\Checkers\Checkers\OpenGL\OpenGL.vcxproj" (Build target(s)).
+﻿Build started 7/05/2015 4:32:25 PM.
 
 Build succeeded.
 
-Time Elapsed 00:00:06.11
+Time Elapsed 00:00:00.04
