@@ -22,6 +22,11 @@ public:
 
 	void CreateBoard();
 
+	void CheckForMoves(BoardPiece* _checkerSelected);
+	void FindEdibleCheckers(glm::vec2 _gridPos);
+
+	void DeselectingPotentialMoves();
+
 	std::vector<BoardPiece*> GetBoardPieces(){ return m_boardPieces; }
 
 private:

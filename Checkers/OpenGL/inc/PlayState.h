@@ -20,9 +20,6 @@ public:
 	void Draw(Camera *_camera);
 	void SelectingCheckers();
 
-	void CheckingForMoves(glm::vec2 _gridPos);
-	void DeselectingPotentialMoves();
-	void FindEdibleCheckers(glm::vec2 _gridPos);
 private:
 	GLFWwindow *m_pWindow;
 	Board *m_Board;
