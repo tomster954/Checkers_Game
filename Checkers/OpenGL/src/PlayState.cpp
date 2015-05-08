@@ -124,7 +124,7 @@ void PlayState::CheckingForMoves(glm::vec2 _gridPos)
 		{
 			//[ ][X]
 			//[0][ ]
-			//[ ][ ]
+			//[ ][ ] //Checking if top right is free
 			if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y + 1) && piece->GetOcupied() == false)
 				piece->SetPotentialMove(true);
 			else if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y + 1) && piece->GetOcupied() && !piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
@@ -132,7 +132,7 @@ void PlayState::CheckingForMoves(glm::vec2 _gridPos)
 
 			//[ ][ ]
 			//[0][ ]
-			//[ ][X]
+			//[ ][X] //Checking if bottom right is free
 			if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y + 1) && piece->GetOcupied() == false)
 				piece->SetPotentialMove(true);
 			else if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y + 1) && piece->GetOcupied() && !piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
@@ -174,13 +174,15 @@ void PlayState::FindEdibleCheckers(glm::vec2 _gridPos)
 {
 	for (BoardPiece* piece : m_Board->GetBoardPieces())
 	{
-		//set the fist one ur one to potential move
+		//set the fist one ur one to potential move if there is a checker there break
 		if(piece->GetGridLocation() == glm::vec2(_gridPos.x, _gridPos.y) && piece->GetOcupied() != true)
 		{
 			piece->SetPotentialMove(true);
 		}
+		else if(piece->GetGridLocation() == glm::vec2(_gridPos.x, _gridPos.y) && piece->GetOcupied() == true)
+			break;
 
-		//Moving Blue Checkers
+		//Finding Blue moves
 		//---------------------------------------------------------------------------
 		if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y + 1) && piece->GetOcupied() == true && !piece->GetChecker()->IsBlack())
 		{
@@ -192,7 +194,7 @@ void PlayState::FindEdibleCheckers(glm::vec2 _gridPos)
 		}
 		//---------------------------------------------------------------------------
 
-		//Moving Red Checkers TODO Check IF red
+		//Finding Red moves
 		//---------------------------------------------------------------------------
 		if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y - 1) && piece->GetOcupied() == true && piece->GetChecker()->IsBlack())
 		{
