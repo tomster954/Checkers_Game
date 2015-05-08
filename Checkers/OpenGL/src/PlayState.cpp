@@ -91,6 +91,8 @@ void PlayState::SelectingCheckers()
 			if(piece->GetGridLocation() == glm::vec2(m_selectedRow, m_selectedCol) && piece->GetOcupied())
 			{
 				m_pieceToMove = &(*piece);
+				
+				DeselectingPotentialMoves();
 				CheckingForMoves(piece->GetGridLocation());
 			}
 
@@ -116,39 +118,49 @@ void PlayState::CheckingForMoves(glm::vec2 _gridPos)
 	for (BoardPiece* piece : m_Board->GetBoardPieces())
 	{
 
-		//Moving Black Checkers
+		//Moving Blue Checkers
 		//---------------------------------------------------------------------------
 		if(m_pieceToMove->GetChecker() != nullptr && m_pieceToMove->GetChecker()->IsBlack())
 		{
+			//[ ][X]
+			//[0][ ]
+			//[ ][ ]
 			if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y + 1) && piece->GetOcupied() == false)
-			{
-				//[ ][X]
-				//[0][ ]
-				//[ ][ ]
 				piece->SetPotentialMove(true);
-			}
-			else if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y + 1) && piece->GetOcupied())
-			{
-				//is true if the piece diagonal is ocupied. Means there is an edible checker
+			else if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y + 1) && piece->GetOcupied() && !piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
 				FindEdibleCheckers(glm::vec2(_gridPos.x - 2, _gridPos.y + 2));
-			}
 
+			//[ ][ ]
+			//[0][ ]
+			//[ ][X]
 			if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y + 1) && piece->GetOcupied() == false)
-			{
-				//[ ][ ]
-				//[0][ ]
-				//[ ][X]
 				piece->SetPotentialMove(true);
-			}
-			else if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y + 1) && piece->GetOcupied())
-			{
-				//is true if the piece diagonal is ocupied. Means there is an edible checker
+			else if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y + 1) && piece->GetOcupied() && !piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
 				FindEdibleCheckers(glm::vec2(_gridPos.x + 2, _gridPos.y + 2));
-			}
 		}
 		//---------------------------------------------------------------------------
 
-	//piece->SetPotentialMove(false);
+		//Moving Red Checkers
+		//---------------------------------------------------------------------------
+		if(m_pieceToMove->GetChecker() != nullptr && m_pieceToMove->GetChecker()->IsBlack() != true)
+		{
+			//[X][ ]
+			//[ ][0]
+			//[ ][ ]
+			if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y - 1) && piece->GetOcupied() == false)
+				piece->SetPotentialMove(true);
+			else if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y - 1) && piece->GetOcupied() && piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
+				FindEdibleCheckers(glm::vec2(_gridPos.x - 2, _gridPos.y - 2));
+
+			//[ ][ ]
+			//[ ][0]
+			//[X][ ]
+			if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y - 1) && piece->GetOcupied() == false)
+				piece->SetPotentialMove(true);
+			else if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y - 1) && piece->GetOcupied() && piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
+				FindEdibleCheckers(glm::vec2(_gridPos.x + 2, _gridPos.y - 2));
+		}
+		//---------------------------------------------------------------------------
 	}
 }
 
@@ -162,18 +174,34 @@ void PlayState::FindEdibleCheckers(glm::vec2 _gridPos)
 {
 	for (BoardPiece* piece : m_Board->GetBoardPieces())
 	{
+		//set the fist one ur one to potential move
 		if(piece->GetGridLocation() == glm::vec2(_gridPos.x, _gridPos.y) && piece->GetOcupied() != true)
 		{
 			piece->SetPotentialMove(true);
 		}
-		
-		if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y + 1) && piece->GetOcupied() == true)
+
+		//Moving Blue Checkers
+		//---------------------------------------------------------------------------
+		if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y + 1) && piece->GetOcupied() == true && !piece->GetChecker()->IsBlack())
 		{
 			FindEdibleCheckers(glm::vec2(_gridPos.x + 2, _gridPos.y + 2));
 		}
-		if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y + 1) && piece->GetOcupied() == true)
+		if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y + 1) && piece->GetOcupied() == true && !piece->GetChecker()->IsBlack())
 		{
 			FindEdibleCheckers(glm::vec2(_gridPos.x - 2, _gridPos.y + 2));
 		}
+		//---------------------------------------------------------------------------
+
+		//Moving Red Checkers TODO Check IF red
+		//---------------------------------------------------------------------------
+		if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y - 1) && piece->GetOcupied() == true && piece->GetChecker()->IsBlack())
+		{
+			FindEdibleCheckers(glm::vec2(_gridPos.x + 2, _gridPos.y - 2));
+		}
+		if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y - 1) && piece->GetOcupied() == true && piece->GetChecker()->IsBlack())
+		{
+			FindEdibleCheckers(glm::vec2(_gridPos.x - 2, _gridPos.y - 2));
+		}
+		//---------------------------------------------------------------------------
 	}
 }
