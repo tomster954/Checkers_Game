@@ -14,7 +14,10 @@ PlayState::PlayState(GLFWwindow *_pWindow)
 	//setting the first board piece as selected
 	for (auto piece : m_Board->GetBoardPieces())
 		if(piece->GetGridLocation() == glm::vec2(0, 0))
+		{
 			piece->SetSelected(true);
+			break;
+		}
 	
 	m_selectedRow = 0;
 	m_selectedCol = 0;
@@ -74,7 +77,7 @@ void PlayState::SelectingCheckers()
 		m_selectedRow = 7;
 	//------------------------------------
 
-	for (auto piece : m_Board->GetBoardPieces())
+	for (BoardPiece* piece : m_Board->GetBoardPieces())
 	{
 		if(piece->GetGridLocation() == glm::vec2(m_selectedRow, m_selectedCol))
 			piece->SetSelected(true);
@@ -100,8 +103,7 @@ void PlayState::SelectingCheckers()
 				piece->SetOcupied(m_pieceToMove->GetChecker());
 				//set the place the checker moved from to empty
 				m_pieceToMove->SetOcupied(NULL);
-				//check for a non existant square to deselect any potential moves
-				CheckingForMoves(glm::vec2(-1,-1));
+				DeselectingPotentialMoves();
 			}
 		}
 	}
@@ -111,25 +113,67 @@ void PlayState::SelectingCheckers()
 
 void PlayState::CheckingForMoves(glm::vec2 _gridPos)
 {
-	for (auto piece : m_Board->GetBoardPieces())
+	for (BoardPiece* piece : m_Board->GetBoardPieces())
 	{
-		if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y + 1))
-		{
-			//[ ][X]
-			//[0][ ]
-			//[ ][ ]
-			piece->SetPotentialMove(true);
-		}
-		else if (piece->GetGridLocation() != glm::vec2(_gridPos.x + 1, _gridPos.y + 1))
-			piece->SetPotentialMove(false);
 
-		if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y + 1))
+		//Moving Black Checkers
+		//---------------------------------------------------------------------------
+		if(m_pieceToMove->GetChecker() != nullptr && m_pieceToMove->GetChecker()->IsBlack())
 		{
-			//[ ][ ]
-			//[0][ ]
-			//[ ][X]
+			if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y + 1) && piece->GetOcupied() == false)
+			{
+				//[ ][X]
+				//[0][ ]
+				//[ ][ ]
+				piece->SetPotentialMove(true);
+			}
+			else if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y + 1) && piece->GetOcupied())
+			{
+				//is true if the piece diagonal is ocupied. Means there is an edible checker
+				FindEdibleCheckers(glm::vec2(_gridPos.x - 2, _gridPos.y + 2));
+			}
+
+			if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y + 1) && piece->GetOcupied() == false)
+			{
+				//[ ][ ]
+				//[0][ ]
+				//[ ][X]
+				piece->SetPotentialMove(true);
+			}
+			else if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y + 1) && piece->GetOcupied())
+			{
+				//is true if the piece diagonal is ocupied. Means there is an edible checker
+				FindEdibleCheckers(glm::vec2(_gridPos.x + 2, _gridPos.y + 2));
+			}
+		}
+		//---------------------------------------------------------------------------
+
+	//piece->SetPotentialMove(false);
+	}
+}
+
+void PlayState::DeselectingPotentialMoves()
+{
+	for (BoardPiece* bit : m_Board->GetBoardPieces())
+		bit->SetPotentialMove(false);
+}
+
+void PlayState::FindEdibleCheckers(glm::vec2 _gridPos)
+{
+	for (BoardPiece* piece : m_Board->GetBoardPieces())
+	{
+		if(piece->GetGridLocation() == glm::vec2(_gridPos.x, _gridPos.y) && piece->GetOcupied() != true)
+		{
 			piece->SetPotentialMove(true);
 		}
-	
+		
+		if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y + 1) && piece->GetOcupied() == true)
+		{
+			FindEdibleCheckers(glm::vec2(_gridPos.x + 2, _gridPos.y + 2));
+		}
+		if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y + 1) && piece->GetOcupied() == true)
+		{
+			FindEdibleCheckers(glm::vec2(_gridPos.x - 2, _gridPos.y + 2));
+		}
 	}
 }

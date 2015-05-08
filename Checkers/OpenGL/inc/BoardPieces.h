@@ -52,9 +52,9 @@ private:
 
 	bool m_pieceToMove;
 
-	glm::vec3 m_position;
 	Checker* m_checker;
 
+	glm::vec3 m_position;	
 };
 
 #endif

@@ -7,6 +7,7 @@ BoardPiece::BoardPiece()
 	m_isOcupied = false;
 	m_potentialMove = false;
 	m_pieceToMove = false;
+	m_checker = nullptr;
 }
 
 BoardPiece::~BoardPiece()
