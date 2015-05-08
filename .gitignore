@@ -1,3 +1,11 @@
 Checkers/OpenGL/dep/FBXLoader_2012/lib/FBXLoader.lib
 Checkers/OpenGL/dep/FBXLoader_2012/lib/FBXLoader_d.lib
 Checkers/OpenGL.v11.suo
+*.obj
+*.tlog
+*.lastbuildstate
+*.idb
+*.pdb
+*.ilk
+*.exe
+*.opensdf
