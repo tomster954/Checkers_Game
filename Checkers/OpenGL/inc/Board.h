@@ -32,5 +32,6 @@ public:
 private:
 	std::vector<BoardPiece*> m_boardPieces;
 	std::vector<Checker*> m_checkers;
+	BoardPiece *m_checkerSelected;
 };
 #endif
