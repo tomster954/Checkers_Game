@@ -32,6 +32,8 @@ PlayState::~PlayState()
 
 void PlayState::Update()
 {
+	m_Board->Update();
+
 	SelectingCheckers();
 	
 	if( glfwGetKey(m_pWindow, GLFW_KEY_S) == GLFW_PRESS || 
@@ -101,11 +103,18 @@ void PlayState::SelectingCheckers()
 			{
 				//Move the selecte checker to piece
 				m_pieceToMove->GetChecker()->Move(m_selectedRow, m_selectedCol);
-				//set the new stop to ocupied witht the checker that moved
+				
+				//set the new spot to ocupied witht the checker that moved
 				piece->SetOcupied(m_pieceToMove->GetChecker());
+
+				
 				//set the place the checker moved from to empty
 				m_pieceToMove->SetOcupied(NULL);
+				
+				//Check For More moves from where u are now
+				m_pieceToMove = &(*piece);
 				m_Board->DeselectingPotentialMoves();
+				m_Board->CheckForMoves(m_pieceToMove);
 			}
 		}
 	}
