@@ -199,15 +199,58 @@ void Board::DeselectingPotentialMoves()
 		bit->SetPotentialMove(false);
 }
 
-void Board::EatingPieces()
+void Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation)
 {
-	for (BoardPiece* piece : m_boardPieces)
-	{
-		//TODO Clear the checker and set stuff like ocupied to false
-	}
-}
+	float x = _startLocation->GetGridLocation().x - _endLocation->GetGridLocation().x;
+	float y = _startLocation->GetGridLocation().y - _endLocation->GetGridLocation().y; 
 
-void Board::CleanEatingList()
-{
-	m_eatenPieces.clear();
+	//if the change on the x and y axis has changed 2 places meaning it has jumped something
+	if(abs(x) == 2 && abs(y) == 2)
+	{
+		//1 = start pos
+		//2 = end pos
+		//0 = the checker we need to kill
+
+		if(x == 2 && y == -2)
+		{
+			x = x;
+			//| | |2|
+			//| |0| |
+			//|1| | |
+
+			//0 pos  = startpos.x -1, startpos.y + 1
+		}
+
+		if(x == 2 && y == 2)
+		{
+			x = x;
+			//|2| | |
+			//| |0| |
+			//| | |1|
+
+			//0 pos  = startpos.x -1, startpos.y + 1
+		}
+
+		if(x == -2 && y == -2)
+		{
+			x = x;
+			//|1| | |
+			//| |0| |
+			//| | |2|
+
+			//0 pos  = startpos.x -1, startpos.y + 1
+		}
+
+		if(x == -2 && y == 2)
+		{
+			x = x;
+			//| | |1|
+			//| |0| |
+			//|2| | |
+
+			//0 pos  = startpos.x -1, startpos.y + 1
+		}
+
+
+	}
 }

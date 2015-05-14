@@ -107,14 +107,16 @@ void PlayState::SelectingCheckers()
 				//set the new spot to ocupied witht the checker that moved
 				piece->SetOcupied(m_pieceToMove->GetChecker());
 
-				
+				BoardPiece *start = &(*m_pieceToMove);
 				//set the place the checker moved from to empty
 				m_pieceToMove->SetOcupied(NULL);
-				
+
 				//Check For More moves from where u are now
 				m_pieceToMove = &(*piece);
 				m_Board->DeselectingPotentialMoves();
 				m_Board->CheckForMoves(m_pieceToMove);
+
+				m_Board->FindEatenPiece(start, m_pieceToMove); //get the start pos and end pos and find the checker bettween.
 			}
 		}
 	}

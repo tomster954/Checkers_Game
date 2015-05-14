@@ -26,16 +26,15 @@ public:
 	void FindEdibleCheckers(glm::vec2 _gridPos);
 
 	void DeselectingPotentialMoves();
-
-	void EatingPieces();
-	void CleanEatingList();
+	void FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation);
 
 	std::vector<BoardPiece*> GetBoardPieces(){ return m_boardPieces; }
 
 private:
 	std::vector<BoardPiece*> m_boardPieces;
-	std::vector<BoardPiece*> m_eatenPieces;
 	std::vector<Checker*> m_checkers;
 	BoardPiece *m_checkerSelected;
+	BoardPiece *m_eatenPiece;
+
 };
 #endif
