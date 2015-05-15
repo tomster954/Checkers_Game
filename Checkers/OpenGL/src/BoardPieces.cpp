@@ -23,20 +23,19 @@ void BoardPiece::Draw()
 							0, 0, 1, 1,
 							0, 0, 0, 1);
 
-	glm::vec4 colour;
+	glm::vec4 colour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	
+	if(m_selected)
+		colour = (glm::vec4(0.0f, 1.0f, 1.0f, 1));
+	else if(m_potentialMove)
+		colour = (glm::vec4(0.0f, 1.0f, 0.0f, 1));
+	else if(m_colourIsBlack)
+		colour = (colour * glm::vec4(0.0f, 0.1f, 0.1f, 1));
+	
 
-	if(m_colourIsBlack && !m_selected)
-		colour = glm::vec4(0.0f, 0.1f, 0.1f, 1);
-	else if(m_selected)
-		colour = glm::vec4(1.0f, 1.0f, 0.0f, 1);
-	else
-		colour = glm::vec4(1.0f, 1.0f, 0.8f, 1);
 	
-	if(m_potentialMove)
-		colour = glm::vec4(0.0f, 1.0f, 0.0f, 1);
-	
-	if(m_isOcupied)
-		colour = glm::vec4(0.2f, 0.0f, 0.0f, 1);
+	//if(m_isOcupied)
+	//	colour = glm::normalize(colour + glm::vec4(0.2f, 0.0f, 0.0f, 1));
 
 	
 	Gizmos::addAABBFilled(glm::vec3(0 + (20 * m_col), 0, 0 + (20 * m_row)), glm::vec3(10, 5, 10), colour, project);

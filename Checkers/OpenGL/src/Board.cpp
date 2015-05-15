@@ -22,11 +22,13 @@ void Board::Draw()
 	for (auto piece : m_boardPieces)
 	{
 		piece->Draw();
+		if (piece->GetOcupied() != NULL)
+			piece->GetChecker()->Draw();
 	}
 	
 	for (auto checker : m_checkers)
 	{
-		checker->Draw();
+		//checker->Draw();
 	}
 }
 
@@ -143,7 +145,7 @@ void Board::FindEdibleCheckers(glm::vec2 _gridPos)
 			shouldReturn = true;
 			break;
 		}
-		else if (_gridPos.x <= -1 || _gridPos.y <= -1 || _gridPos.x >= 8 || _gridPos.y >= 8)
+		else if (_gridPos.x <= -1 || _gridPos.y <= -1 || _gridPos.x >= 8 || _gridPos.y >= 7)
 			shouldReturn = true;
 	}
 
@@ -246,14 +248,10 @@ void Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation)
 			eatenPieceGridLocataction = glm::vec2(_startLocation->GetGridLocation().x + 1, _startLocation->GetGridLocation().y - 1);
 		}
 
+		//delete eaten checkers
 		for (BoardPiece* bit : m_boardPieces)
-		{
 			if(bit->GetGridLocation() == eatenPieceGridLocataction)
-			{
 				bit->SetOcupied(NULL);
-				//TODO Kill Checker
-				//Or change the draw function
-			}
-		}
+
 	}
 }
