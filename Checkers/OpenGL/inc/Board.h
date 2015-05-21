@@ -22,12 +22,22 @@ public:
 
 	void CreateBoard();
 	
-	void CheckIfPieceRechedOtherEnd(BoardPiece* _piece); 
+	void CheckForKings(BoardPiece* _piece); 
 	void CheckForMoves(BoardPiece* _checkerSelected);
+
+	void BlueMoves(BoardPiece* _checkerSelected);
+	void RedMoves(BoardPiece* _checkerSelected);
+
 	void FindEdibleCheckers(glm::vec2 _gridPos);
 
 	void DeselectingPotentialMoves();
 	void FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation);
+
+	void SetBluesTurn( bool _bluesTurn) { m_blueTurn = _bluesTurn; }
+	bool BluesTurn() { return m_blueTurn; }
+
+	bool MoreBlueMoves() { return m_moreBlueMoves; }
+	bool MoreRedMoves() { return m_moreRedMoves; }
 
 	std::vector<BoardPiece*> GetBoardPieces(){ return m_boardPieces; }
 
@@ -37,5 +47,12 @@ private:
 	BoardPiece *m_checkerSelected;
 	BoardPiece *m_eatenPiece;
 
+	bool m_blueTurn;
+
+	bool m_moreBlueMoves;
+	bool m_moreRedMoves;
+	bool m_moreEdibleBits;
+
+	bool m_prevMoveColorWasBlack;
 };
 #endif
