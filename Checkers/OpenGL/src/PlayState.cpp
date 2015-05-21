@@ -116,8 +116,15 @@ void PlayState::SelectingCheckers()
  				m_Board->DeselectingPotentialMoves();
 				
 				m_Board->FindEatenPiece(start, m_pieceToMove); //get the start pos and end pos and find the checker bettween.
-				m_Board->CheckForMoves(m_pieceToMove);
 				
+				
+				float x = start->GetGridLocation().x - m_pieceToMove->GetGridLocation().x;
+				float y = start->GetGridLocation().y - m_pieceToMove->GetGridLocation().y; 
+
+				//if the change on the x and y axis has changed 2 places meaning it has jumped something
+				if(abs(x) == 2 && abs(y) == 2)
+					m_Board->CheckForMoves(m_pieceToMove);
+
 				if(m_pieceToMove->GetChecker()->IsBlack() && !m_Board->MoreBlueMoves())
 				{
  					m_Board->DeselectingPotentialMoves();
@@ -128,6 +135,7 @@ void PlayState::SelectingCheckers()
 					m_Board->DeselectingPotentialMoves();
 					m_Board->SetBluesTurn(!m_Board->BluesTurn());
 				}
+				
 			}
 		}
 	}

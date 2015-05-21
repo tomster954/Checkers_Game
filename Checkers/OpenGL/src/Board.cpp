@@ -77,7 +77,8 @@ void Board::CheckForMoves(BoardPiece* _checkerSelected)
 	{
 		if(m_blueTurn)
 			BlueMoves(piece);
-		else
+		
+		if(!m_blueTurn)
 			RedMoves(piece);
 
 		CheckForKings(piece);
@@ -92,10 +93,10 @@ void Board::BlueMoves(BoardPiece* _piece)
 	if(m_checkerSelected->GetChecker() != nullptr && m_checkerSelected->GetChecker()->IsBlack())//checking if the selected checker has a valid checker
 	{
 		//[ ][X]
-			//[0][ ]
-			//[ ][ ] 
-			//Check to see if the diaginal piece is vacant, if it is set it as a potential move
-			//Else if its ocupied and its the opposite colour it might be edible so call the FindEdibleCheckers function
+		//[0][ ]
+		//[ ][ ] 
+		//Check to see if the diaginal piece is vacant, if it is set it as a potential move
+		//Else if its ocupied and its the opposite colour it might be edible so call the FindEdibleCheckers function
 		if(_piece->GetGridLocation() == glm::vec2(gridPos.x - 1, gridPos.y + 1) && _piece->GetOcupied() == false)
 			_piece->SetPotentialMove(true);
 		else if(_piece->GetGridLocation() == glm::vec2(gridPos.x - 1, gridPos.y + 1) && _piece->GetOcupied() && !_piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
@@ -158,9 +159,6 @@ void Board::BlueMoves(BoardPiece* _piece)
 }
 void Board::RedMoves(BoardPiece* _piece)
 {
-	m_moreBlueMoves = false;
-	m_moreRedMoves = false;
-
 	glm::vec2 gridPos = m_checkerSelected->GetGridLocation();
 
 	//Finding Potential moves for Red
@@ -237,8 +235,6 @@ void Board::FindEdibleCheckers(glm::vec2 _gridPos)
 	m_moreEdibleBits = false;
 	for (BoardPiece* piece : m_boardPieces)
 	{
-		
-
 		//Grid pos = one of the points around the selected checker
 		//Set this position to a potential move if this board piece is vacant.
 		//Else if it is vacant break from the loop because its not a potential move.
@@ -250,7 +246,7 @@ void Board::FindEdibleCheckers(glm::vec2 _gridPos)
 		}
 		else if(piece->GetGridLocation() == glm::vec2(_gridPos.x, _gridPos.y) && piece->GetOcupied() == true)
 			break;
-		else if (_gridPos.x <= -1 || _gridPos.y <= -1 || _gridPos.x >= 8 || _gridPos.y >= 7)
+		else if (_gridPos.x <= -1 || _gridPos.y <= -1 || _gridPos.x >= 8 || _gridPos.y >= 8)
 			break;
 	}
 }
