@@ -113,10 +113,11 @@ void PlayState::SelectingCheckers()
 
 				//Check For More moves from where u are now
 				m_pieceToMove = &(*piece);
-				m_Board->DeselectingPotentialMoves();
-				m_Board->CheckForMoves(m_pieceToMove);
-
+ 				m_Board->DeselectingPotentialMoves();
+				
 				m_Board->FindEatenPiece(start, m_pieceToMove); //get the start pos and end pos and find the checker bettween.
+				m_Board->CheckForMoves(m_pieceToMove);
+				
 			}
 		}
 	}

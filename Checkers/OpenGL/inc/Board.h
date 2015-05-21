@@ -21,7 +21,8 @@ public:
 	void Draw();
 
 	void CreateBoard();
-
+	
+	void CheckIfPieceRechedOtherEnd(BoardPiece* _piece); 
 	void CheckForMoves(BoardPiece* _checkerSelected);
 	void FindEdibleCheckers(glm::vec2 _gridPos);
 

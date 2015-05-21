@@ -1,10 +1,8 @@
-﻿Build started 15/05/2015 11:36:51 AM.
+﻿Build started 21/05/2015 10:53:45 AM.
      1>Project "C:\Users\tommas.solarino\Documents\Assessment2\Checkers\OpenGL\OpenGL.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I./dep/glfw/include /I./dep/glm /I./dep/aieutilities /I./src /I./inc /I./dep/AntTweakBar/include /I./dep/FBXLoader_2012/include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D GLM_SWIZZLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\Board.cpp
-         Board.cpp
-     1>c:\users\tommas.solarino\documents\assessment2\checkers\opengl\src\board.cpp(43): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tommas.solarino\documents\assessment2\checkers\opengl\src\board.cpp(45): warning C4018: '<' : signed/unsigned mismatch
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I./dep/glfw/include /I./dep/glm /I./dep/aieutilities /I./src /I./inc /I./dep/AntTweakBar/include /I./dep/FBXLoader_2012/include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D GLM_SWIZZLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\PlayState.cpp
+         PlayState.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\tommas.solarino\Documents\Assessment2\Checkers\Debug\OpenGL.exe" /INCREMENTAL /NOLOGO /LIBPATH:"./dep/glfw/lib-vc2012" /LIBPATH:./dep/AntTweakBar/lib /LIBPATH:./dep/FBXLoader_2012/lib opengl32.lib glfw3.lib AntTweakBar.lib FBXLoader_d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\tommas.solarino\Documents\Assessment2\Checkers\Debug\OpenGL.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\tommas.solarino\Documents\Assessment2\Checkers\Debug\OpenGL.lib" /MACHINE:X86 Debug\Gizmos_fix.obj
          Debug\Application.obj
@@ -18,11 +16,9 @@
          Debug\gl_core_4_4.obj
          Debug\GUI_Bar.obj
          Debug\Main.obj
-     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-     1>FBXLoader_d.lib(FBXFile.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'FBXLoader_d.lib(FBXFile.obj)' or at 'C:\Users\tommas.solarino\Documents\Assessment2\Checkers\Debug\vc110.pdb'; linking object as if no debug info
          OpenGL.vcxproj -> C:\Users\tommas.solarino\Documents\Assessment2\Checkers\Debug\OpenGL.exe
      1>Done Building Project "C:\Users\tommas.solarino\Documents\Assessment2\Checkers\OpenGL\OpenGL.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:03.33
+Time Elapsed 00:00:02.58

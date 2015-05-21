@@ -49,6 +49,7 @@ private:
 	bool m_selected;
 	bool m_isOcupied; //is true if a checker is on it
 	bool m_potentialMove;
+	bool m_forward;
 
 	bool m_pieceToMove;
 

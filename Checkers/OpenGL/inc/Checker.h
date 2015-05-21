@@ -19,12 +19,17 @@ public:
 
 	void CreateNewChecker();
 	bool IsBlack() { return m_black; }
+	
+	bool IsKing() { return m_king; }
+	void SetKing( bool _king) { m_king = _king; }
 
 	void Move(int _row, int _col) {m_row = _row; m_col = _col; }
 
 private:
 	unsigned int m_row;
 	unsigned int m_col;
+
+	bool m_king;
 
 	bool m_black;
 	glm::vec3 m_pos;

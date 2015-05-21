@@ -9,7 +9,7 @@ Board::Board()
 
 Board::~Board()
 {
-
+	delete m_checkerSelected;
 }
 
 void Board::Update()
@@ -21,14 +21,10 @@ void Board::Draw()
 {
 	for (auto piece : m_boardPieces)
 	{
+		//draw each piece and the checker that it has on it
 		piece->Draw();
 		if (piece->GetOcupied() != NULL)
 			piece->GetChecker()->Draw();
-	}
-	
-	for (auto checker : m_checkers)
-	{
-		//checker->Draw();
 	}
 }
 
@@ -73,59 +69,110 @@ void Board::CheckForMoves(BoardPiece* _checkerSelected)
 
 	glm::vec2 gridPos = m_checkerSelected->GetGridLocation();
 
+	//Loops through all the board pieces and check for potential moves based iff the selected checker
 	for (BoardPiece* piece : m_boardPieces)
 	{
-		//Moving Blue Checkers
+		//Finding Potential moves for Blue
 		//---------------------------------------------------------------------------
 		if(m_checkerSelected->GetChecker() != nullptr && m_checkerSelected->GetChecker()->IsBlack())//checking if the selected checker has a valid checker
 		{
 			//[ ][X]
 			//[0][ ]
-			//[ ][ ] //Checking if top right is free and if it is set it as a potential move
+			//[ ][ ] 
+			//Check to see if the diaginal piece is vacant, if it is set it as a potential move
+			//Else if its ocupied and its the opposite colour it might be edible so call the FindEdibleCheckers function
 			if(piece->GetGridLocation() == glm::vec2(gridPos.x - 1, gridPos.y + 1) && piece->GetOcupied() == false)
 				piece->SetPotentialMove(true);
 			else if(piece->GetGridLocation() == glm::vec2(gridPos.x - 1, gridPos.y + 1) && piece->GetOcupied() && !piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
-			{
 				FindEdibleCheckers(glm::vec2(gridPos.x - 2, gridPos.y + 2));//else find out if you can eat the piece there
-			}
 
 			//[ ][ ]
 			//[0][ ]
-			//[ ][X] //Checking if bottom right is free
+			//[ ][X]
+			//Check to see if the diaginal piece is vacant, if it is set it as a potential move
+			//Else if its ocupied and its the opposite colour it might be edible so call the FindEdibleCheckers function
 			if(piece->GetGridLocation() == glm::vec2(gridPos.x + 1, gridPos.y + 1) && piece->GetOcupied() == false)
 				piece->SetPotentialMove(true);
 			else if(piece->GetGridLocation() == glm::vec2(gridPos.x + 1, gridPos.y + 1) && piece->GetOcupied() && !piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
-			{
 				FindEdibleCheckers(glm::vec2(gridPos.x + 2, gridPos.y + 2));
+
+			//Have the Ability to move in every direction once a king
+			if(m_checkerSelected->GetChecker()->IsKing())
+			{
+				//[X][ ]
+				//[ ][0]
+				//[ ][ ]
+				//Check to see if the diaginal piece is vacant, if it is set it as a potential move
+				//Else if its ocupied and its the opposite colour it might be edible so call the FindEdibleCheckers function
+				if(piece->GetGridLocation() == glm::vec2(gridPos.x - 1, gridPos.y - 1) && piece->GetOcupied() == false)
+					piece->SetPotentialMove(true);
+				else if(piece->GetGridLocation() == glm::vec2(gridPos.x - 1, gridPos.y - 1) && piece->GetOcupied() && !piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
+					FindEdibleCheckers(glm::vec2(gridPos.x - 2, gridPos.y - 2));
+
+				//[ ][ ]
+				//[ ][0]
+				//[X][ ]
+				//Check to see if the diaginal piece is vacant, if it is set it as a potential move
+				//Else if its ocupied and its the opposite colour it might be edible so call the FindEdibleCheckers function
+				if(piece->GetGridLocation() == glm::vec2(gridPos.x + 1, gridPos.y - 1) && piece->GetOcupied() == false)
+					piece->SetPotentialMove(true);
+				else if(piece->GetGridLocation() == glm::vec2(gridPos.x + 1, gridPos.y - 1) && piece->GetOcupied() && !piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
+					FindEdibleCheckers(glm::vec2(gridPos.x + 2, gridPos.y - 2));
 			}
 		}
 		//---------------------------------------------------------------------------
 
-		//Moving Red Checkers
+		//Finding Potential moves for Red
 		//---------------------------------------------------------------------------
 		if(m_checkerSelected->GetChecker() != nullptr && m_checkerSelected->GetChecker()->IsBlack() != true)
 		{
 			//[X][ ]
 			//[ ][0]
 			//[ ][ ]
+			//Check to see if the diaginal piece is vacant, if it is set it as a potential move
+			//Else if its ocupied and its the opposite colour it might be edible so call the FindEdibleCheckers function
 			if(piece->GetGridLocation() == glm::vec2(gridPos.x - 1, gridPos.y - 1) && piece->GetOcupied() == false)
 				piece->SetPotentialMove(true);
 			else if(piece->GetGridLocation() == glm::vec2(gridPos.x - 1, gridPos.y - 1) && piece->GetOcupied() && piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
-			{
 				FindEdibleCheckers(glm::vec2(gridPos.x - 2, gridPos.y - 2));
-			}
 
 			//[ ][ ]
 			//[ ][0]
 			//[X][ ]
+			//Check to see if the diaginal piece is vacant, if it is set it as a potential move
+			//Else if its ocupied and its the opposite colour it might be edible so call the FindEdibleCheckers function
 			if(piece->GetGridLocation() == glm::vec2(gridPos.x + 1, gridPos.y - 1) && piece->GetOcupied() == false)
 				piece->SetPotentialMove(true);
 			else if(piece->GetGridLocation() == glm::vec2(gridPos.x + 1, gridPos.y - 1) && piece->GetOcupied() && piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
-			{
 				FindEdibleCheckers(glm::vec2(gridPos.x + 2, gridPos.y - 2));
+			
+			
+			//Have the Ability to move in every direction once a king
+			if(m_checkerSelected->GetChecker()->IsKing())
+			{
+				//[ ][X]
+				//[0][ ]
+				//[ ][ ] 
+				//Check to see if the diaginal piece is vacant, if it is set it as a potential move
+				//Else if its ocupied and its the opposite colour it might be edible so call the FindEdibleCheckers function
+				if(piece->GetGridLocation() == glm::vec2(gridPos.x - 1, gridPos.y + 1) && piece->GetOcupied() == false)
+					piece->SetPotentialMove(true);
+				else if(piece->GetGridLocation() == glm::vec2(gridPos.x - 1, gridPos.y + 1) && piece->GetOcupied() && piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
+					FindEdibleCheckers(glm::vec2(gridPos.x - 2, gridPos.y + 2));//else find out if you can eat the piece there
+
+				//[ ][ ]
+				//[0][ ]
+				//[ ][X]
+				//Check to see if the diaginal piece is vacant, if it is set it as a potential move
+				//Else if its ocupied and its the opposite colour it might be edible so call the FindEdibleCheckers function
+				if(piece->GetGridLocation() == glm::vec2(gridPos.x + 1, gridPos.y + 1) && piece->GetOcupied() == false)
+					piece->SetPotentialMove(true);
+				else if(piece->GetGridLocation() == glm::vec2(gridPos.x + 1, gridPos.y + 1) && piece->GetOcupied() && piece->GetChecker()->IsBlack())//is true if the piece diagonal is ocupied. Means there is an edible checker
+					FindEdibleCheckers(glm::vec2(gridPos.x + 2, gridPos.y + 2));
 			}
 		}
 		//---------------------------------------------------------------------------
+		CheckIfPieceRechedOtherEnd(piece);
 	}
 }
 
@@ -135,64 +182,17 @@ void Board::FindEdibleCheckers(glm::vec2 _gridPos)
 
 	for (BoardPiece* piece : m_boardPieces)
 	{
-		//set the fist one ur one to potential move if there is a checker there break
+		//Grid pos = one of the points around the selected checker
+		//Set this position to a potential move if this board piece is vacant.
+		//Else if it is vacant break from the loop because its not a potential move.
+		//Else if its outside the grid return aswell.
 		if(piece->GetGridLocation() == glm::vec2(_gridPos.x, _gridPos.y) && piece->GetOcupied() != true)
-		{
 			piece->SetPotentialMove(true);
-		}
 		else if(piece->GetGridLocation() == glm::vec2(_gridPos.x, _gridPos.y) && piece->GetOcupied() == true)
-		{
-			shouldReturn = true;
 			break;
-		}
 		else if (_gridPos.x <= -1 || _gridPos.y <= -1 || _gridPos.x >= 8 || _gridPos.y >= 7)
-			shouldReturn = true;
+			break;
 	}
-
-	if(shouldReturn)
-	{
-		//CleanEatingList(); //clear the list of checker to eat because you cant eat it
-		return;
-	}
-	//Dont Nead to search for all moves at once anymore
-	//for (BoardPiece* piece : m_boardPieces)
-	//{
-	//	//Checking that the current checker isnt the same colour as the originally selected one.
-	//	if(piece->GetOcupied() == true && piece->GetChecker()->IsBlack() != m_checkerSelected->GetChecker()->IsBlack())
-	//	{
-	//		//Finding Blue moves (blue checker is selected)
-	//		//---------------------------------------------------------------------------
-	//		if (m_checkerSelected->GetChecker()->IsBlack())
-	//		{
-	//			if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y + 1))
-	//			{
-	//				FindEdibleCheckers(glm::vec2(_gridPos.x + 2, _gridPos.y + 2));
-	//			}
-	//			if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y + 1))
-	//			{
-	//				FindEdibleCheckers(glm::vec2(_gridPos.x - 2, _gridPos.y + 2));
-	//			}
-	//		}
-	//		//---------------------------------------------------------------------------
-	//
-	//		//Finding Red moves
-	//		//---------------------------------------------------------------------------
-	//		if (!m_checkerSelected->GetChecker()->IsBlack()) //only do this if the checker originally selected is red
-	//		{
-	//			if(piece->GetGridLocation() == glm::vec2(_gridPos.x + 1, _gridPos.y - 1))
-	//			{
-	//				FindEdibleCheckers(glm::vec2(_gridPos.x + 2, _gridPos.y - 2));
-	//			}
-	//			if(piece->GetGridLocation() == glm::vec2(_gridPos.x - 1, _gridPos.y - 1))
-	//			{
-	//				FindEdibleCheckers(glm::vec2(_gridPos.x - 2, _gridPos.y - 2));
-	//			}
-	//		}
-	//		//---------------------------------------------------------------------------
-	//	}
-	//
-	//}
-
 }
 
 void Board::DeselectingPotentialMoves()
@@ -217,7 +217,6 @@ void Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation)
 
 		if(x == 2 && y == -2)
 		{
-			x = x;
 			//| | |2|
 			//| |0| |
 			//|1| | |
@@ -225,7 +224,6 @@ void Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation)
 		}
 		if(x == 2 && y == 2)
 		{
-			x = x;
 			//|2| | |
 			//| |0| |
 			//| | |1|
@@ -233,7 +231,6 @@ void Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation)
 		}
 		if(x == -2 && y == -2)
 		{
-			x = x;
 			//|1| | |
 			//| |0| |
 			//| | |2|
@@ -241,7 +238,6 @@ void Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation)
 		}
 		if(x == -2 && y == 2)
 		{
-			x = x;
 			//| | |1|
 			//| |0| |
 			//|2| | |
@@ -252,6 +248,20 @@ void Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation)
 		for (BoardPiece* bit : m_boardPieces)
 			if(bit->GetGridLocation() == eatenPieceGridLocataction)
 				bit->SetOcupied(NULL);
+	}
+}
 
+void Board::CheckIfPieceRechedOtherEnd(BoardPiece* _piece)
+{
+	if(_piece->GetChecker() != nullptr && _piece->GetChecker()->IsBlack())//checking if the selected checker has a valid checker
+	{
+		if(_piece->GetGridLocation().y >=7 && !m_checkerSelected->GetChecker()->IsKing())
+			_piece->GetChecker()->SetKing(true);
+	}
+
+	if(_piece->GetChecker() != nullptr && !_piece->GetChecker()->IsBlack())//checking if the selected checker has a valid checker
+	{
+		if(_piece->GetGridLocation().y <=0 && !m_checkerSelected->GetChecker()->IsKing())
+			_piece->GetChecker()->SetKing(true);
 	}
 }
