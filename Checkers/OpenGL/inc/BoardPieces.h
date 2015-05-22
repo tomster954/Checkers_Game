@@ -54,7 +54,7 @@ private:
 	bool m_pieceToMove;
 
 	Checker* m_checker;
-
+	glm::mat4 *m_project;
 	glm::vec3 m_position;	
 };
 

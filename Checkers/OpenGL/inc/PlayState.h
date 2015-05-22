@@ -19,6 +19,7 @@ public:
 	void Update();
 	void Draw(Camera *_camera);
 	void SelectingCheckers();
+	void MoveChecker(BoardPiece *_piece);
 
 private:
 	GLFWwindow *m_pWindow;
@@ -26,6 +27,7 @@ private:
 	BoardPiece* m_pieceToMove;
 
 	bool m_keyPressed;
+	bool m_bluesTurn;
 
 	int m_selectedRow;
 	int m_selectedCol;

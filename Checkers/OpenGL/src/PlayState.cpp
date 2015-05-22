@@ -10,6 +10,7 @@ PlayState::PlayState(GLFWwindow *_pWindow)
 	Gizmos::create();
 	m_pWindow = _pWindow;
 	m_Board = new Board;
+	m_bluesTurn = false;
 
 	//setting the first board piece as selected
 	for (auto piece : m_Board->GetBoardPieces())
@@ -81,6 +82,7 @@ void PlayState::SelectingCheckers()
 
 	for (BoardPiece* piece : m_Board->GetBoardPieces())
 	{
+		//Highlights the board piece ur on
 		if(piece->GetGridLocation() == glm::vec2(m_selectedRow, m_selectedCol))
 			piece->SetSelected(true);
 		else
@@ -92,51 +94,64 @@ void PlayState::SelectingCheckers()
 			//is the curr piece = to the piece ur on And its got a checker on it
 			if(piece->GetGridLocation() == glm::vec2(m_selectedRow, m_selectedCol) && piece->GetOcupied())
 			{
-				m_pieceToMove = &(*piece);
-				
-				m_Board->DeselectingPotentialMoves();
-				m_Board->CheckForMoves(m_pieceToMove);
+				if(m_bluesTurn && piece->GetChecker()->IsBlack())
+				{
+					m_pieceToMove = &(*piece);
+
+					m_Board->DeselectingPotentialMoves();
+ 					m_Board->BlueMoves(m_pieceToMove);
+				}
+
+				if(!m_bluesTurn && !piece->GetChecker()->IsBlack())
+				{
+					m_pieceToMove = &(*piece);
+					
+					m_Board->DeselectingPotentialMoves();
+					m_Board->RedMoves(m_pieceToMove);
+				}
+
+				//TODO:: swap between turns properly
+				m_bluesTurn = !m_bluesTurn;
 			}
 
 			//If you press space on a potential move
 			if(piece->GetGridLocation() == glm::vec2(m_selectedRow, m_selectedCol) && piece->GetPotentialMove())
 			{
-				//Move the selecte checker to piece
-				m_pieceToMove->GetChecker()->Move(m_selectedRow, m_selectedCol);
-				
-				//set the new spot to ocupied witht the checker that moved
-				piece->SetOcupied(m_pieceToMove->GetChecker());
-
-				BoardPiece *start = &(*m_pieceToMove);
-				//set the place the checker moved from to empty
-				m_pieceToMove->SetOcupied(NULL);
-
-				//Check For More moves from where u are now
-				m_pieceToMove = &(*piece);
- 				m_Board->DeselectingPotentialMoves();
-				
-				m_Board->FindEatenPiece(start, m_pieceToMove); //get the start pos and end pos and find the checker bettween.
-				
-				
-				float x = start->GetGridLocation().x - m_pieceToMove->GetGridLocation().x;
-				float y = start->GetGridLocation().y - m_pieceToMove->GetGridLocation().y; 
-
-				//if the change on the x and y axis has changed 2 places meaning it has jumped something
-				if(abs(x) == 2 && abs(y) == 2)
-					m_Board->CheckForMoves(m_pieceToMove);
-
-				if(m_pieceToMove->GetChecker()->IsBlack() && !m_Board->MoreBlueMoves())
-				{
- 					m_Board->DeselectingPotentialMoves();
-					m_Board->SetBluesTurn(!m_Board->BluesTurn());
-				}
-				if(!m_pieceToMove->GetChecker()->IsBlack() && !m_Board->MoreRedMoves())
-				{
-					m_Board->DeselectingPotentialMoves();
-					m_Board->SetBluesTurn(!m_Board->BluesTurn());
-				}
-				
+				MoveChecker(piece);			
 			}
 		}
 	}
+}
+
+void PlayState::MoveChecker(BoardPiece *_piece)
+{
+	//Move the selecte checker to piece
+	m_pieceToMove->GetChecker()->Move(m_selectedRow, m_selectedCol);
+	
+	//set the new spot to ocupied witht the checker that moved
+	_piece->SetOcupied(m_pieceToMove->GetChecker());
+	
+	BoardPiece *start = &(*m_pieceToMove);
+
+	//set the place the checker moved from to empty
+	m_pieceToMove->SetOcupied(NULL);
+	
+	//Check For More moves from where u are now
+	m_pieceToMove = &(*_piece);
+	m_Board->DeselectingPotentialMoves();
+	
+	m_Board->FindEatenPiece(start, m_pieceToMove); //get the start pos and end pos and find the checker bettween and remove it
+
+	//m_pieceToMove = new pos
+	//if its blue and there are no more moves
+	//if(m_pieceToMove->GetChecker()->IsBlack() && !m_Board->MoreBlueMoves())
+	//{
+	// 	m_Board->DeselectingPotentialMoves();
+	//	m_Board->SetBluesTurn(false);
+	//}
+	//if(!m_pieceToMove->GetChecker()->IsBlack() && !m_Board->MoreRedMoves())
+	//{
+	//	m_Board->DeselectingPotentialMoves();
+	//	m_Board->SetBluesTurn(true);
+	//}
 }
