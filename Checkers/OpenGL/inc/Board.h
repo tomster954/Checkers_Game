@@ -22,7 +22,7 @@ public:
 
 	void CreateBoard();
 	
-	void CheckForKings(BoardPiece* _piece); 
+	void CheckForKings(); 
 	void CheckForMoves(BoardPiece* _checkerSelected);
 
 	void BlueMoves(BoardPiece* _pieceToMove);

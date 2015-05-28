@@ -17,7 +17,6 @@ Board::~Board()
 
 void Board::Update()
 {
-
 }
 
 void Board::Draw()
@@ -68,21 +67,8 @@ void Board::CreateBoard()
 
 void Board::CheckForMoves(BoardPiece* _checkerSelected)
 {
-
-	//m_moreBlueMoves = false;
-	//m_moreRedMoves = false;
-
 	//Loops through all the board pieces and check for potential moves based iff the selected checker
-	for (BoardPiece* piece : m_boardPieces)
-	{
-		//if(m_blueTurn)
-		//	BlueMoves(piece);
-		//
-		//if(!m_blueTurn)
-		//	RedMoves(piece);
-		
-		CheckForKings(piece);
-	}
+	
 }
 
 void Board::BlueMoves(BoardPiece* _pieceToMove)
@@ -255,15 +241,22 @@ bool Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation,
 	return m_foundEatenChecker;
 }
 
-void Board::CheckForKings(BoardPiece* _piece)
+void Board::CheckForKings()
 {
-	if(_piece->GetChecker() != nullptr && _piece->GetChecker()->IsBlack())//checking if the selected checker has a valid checker
-		if(_piece->GetGridLocation().y >=7 && !m_checkerSelected->GetChecker()->IsKing())
-			_piece->GetChecker()->SetKing(true);
+	for (BoardPiece* piece : m_boardPieces)
+	{
+		//checking if the selected checker has a valid checker
+		if(!piece->GetOcupied())
+			continue;
 
-	if(_piece->GetChecker() != nullptr && !_piece->GetChecker()->IsBlack())//checking if the selected checker has a valid checker
-		if(_piece->GetGridLocation().y <=0 && !m_checkerSelected->GetChecker()->IsKing())
-			_piece->GetChecker()->SetKing(true);
+		if(piece->GetChecker()->IsBlack())
+			if(piece->GetGridLocation().y >=7)
+				piece->GetChecker()->SetKing(true);
+		
+		if(!piece->GetChecker()->IsBlack())
+			if(piece->GetGridLocation().y <=0)
+				piece->GetChecker()->SetKing(true);
+	}
 }
 
 bool Board::CanBlueJump()

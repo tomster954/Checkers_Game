@@ -111,7 +111,6 @@ void PlayState::SelectingCheckers()
 				}
 
 				//TODO:: swap between turns properly
-				m_bluesTurn = !m_bluesTurn;
 			}
 
 			//If you press space on a potential move
@@ -145,6 +144,9 @@ void PlayState::SelectingCheckers()
 
 void PlayState::MoveChecker(BoardPiece *_piece)
 {
+		//swap turn after moving
+		m_bluesTurn = !m_bluesTurn;
+
 		//Move the selecte checker to piece
 		m_pieceToMove->GetChecker()->Move(m_selectedRow, m_selectedCol);
 		
@@ -161,4 +163,6 @@ void PlayState::MoveChecker(BoardPiece *_piece)
 		m_Board->DeselectingPotentialMoves();
 
 		m_Board->FindEatenPiece(start, m_pieceToMove, true); //get the start pos and end pos and find the checker bettween and remove it
+
+		m_Board->CheckForKings();
 }
