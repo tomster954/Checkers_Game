@@ -65,12 +65,6 @@ void Board::CreateBoard()
 		}
 }
 
-void Board::CheckForMoves(BoardPiece* _checkerSelected)
-{
-	//Loops through all the board pieces and check for potential moves based iff the selected checker
-	
-}
-
 void Board::BlueMoves(BoardPiece* _pieceToMove)
 {
 	m_mustMoveThese.clear();
@@ -189,9 +183,6 @@ bool Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation,
 	//if the change on the x and y axis has changed 2 places meaning it has jumped something
 	if(abs(x) == 2 && abs(y) == 2)
 	{
-		//checking for more moves if the player has made a jump
-		CheckForMoves(_endLocation);
-
 		glm::vec2 eatenPieceGridLocataction = glm::vec2(0);
 		
 		//1 = start pos
