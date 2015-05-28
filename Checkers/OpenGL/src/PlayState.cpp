@@ -131,8 +131,13 @@ void PlayState::SelectingCheckers()
 					}
 				}
 
-				if(canMove || counter <= 0)
-					MoveChecker(piece);			
+				if(canMove)
+ 					if(m_Board->FindEatenPiece(m_pieceToMove, piece, false))
+						MoveChecker(piece);
+
+				//if no mustmove where found
+				if(counter <= 0)
+					MoveChecker(piece);
 			}
 		}
 	}
@@ -140,20 +145,20 @@ void PlayState::SelectingCheckers()
 
 void PlayState::MoveChecker(BoardPiece *_piece)
 {
-	//Move the selecte checker to piece
-	m_pieceToMove->GetChecker()->Move(m_selectedRow, m_selectedCol);
-	
-	//set the new spot to ocupied witht the checker that moved
-	_piece->SetOcupied(m_pieceToMove->GetChecker());
-	
-	BoardPiece *start = &(*m_pieceToMove);
+		//Move the selecte checker to piece
+		m_pieceToMove->GetChecker()->Move(m_selectedRow, m_selectedCol);
+		
+		//set the new spot to ocupied witht the checker that moved
+		_piece->SetOcupied(m_pieceToMove->GetChecker());
+		
+		BoardPiece *start = &(*m_pieceToMove);
 
-	//set the place the checker moved from to empty
-	m_pieceToMove->SetOcupied(NULL);
-	
-	//Check For More moves from where u are now
-	m_pieceToMove = &(*_piece);
-	m_Board->DeselectingPotentialMoves();
+		//set the place the checker moved from to empty
+		m_pieceToMove->SetOcupied(NULL);
+		
+		//Check For More moves from where u are now
+		m_pieceToMove = &(*_piece);
+		m_Board->DeselectingPotentialMoves();
 
-	m_Board->FindEatenPiece(start, m_pieceToMove); //get the start pos and end pos and find the checker bettween and remove it
+		m_Board->FindEatenPiece(start, m_pieceToMove, true); //get the start pos and end pos and find the checker bettween and remove it
 }

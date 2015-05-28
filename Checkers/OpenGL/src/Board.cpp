@@ -7,6 +7,7 @@ Board::Board()
 	m_checkerSelected = new BoardPiece();
 	m_blueTurn = false;
 	m_prevMoveColorWasBlack = false;
+	m_foundEatenChecker = false;
 }
 
 Board::~Board()
@@ -183,10 +184,6 @@ void Board::RedMoves(BoardPiece* _pieceToMove)
 	}
 }
 
-void Board::FindEdibleCheckers(glm::vec2 _gridPos)
-{
-}
-
 void Board::DeselectingPotentialMoves()
 {
 	for (BoardPiece* bit : m_boardPieces)
@@ -196,8 +193,10 @@ void Board::DeselectingPotentialMoves()
 	}
 }
 
-void Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation)
+bool Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation, bool _deleteFoundCheckers)
 {
+	m_foundEatenChecker = false;
+
 	float x = _startLocation->GetGridLocation().x - _endLocation->GetGridLocation().x;
 	float y = _startLocation->GetGridLocation().y - _endLocation->GetGridLocation().y; 
 
@@ -219,6 +218,7 @@ void Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation)
 			//| |0| |
 			//|1| | |
 			eatenPieceGridLocataction = glm::vec2(_startLocation->GetGridLocation().x - 1, _startLocation->GetGridLocation().y + 1);
+			m_foundEatenChecker = true;
 		}
 		if(x == 2 && y == 2)
 		{
@@ -226,6 +226,7 @@ void Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation)
 			//| |0| |
 			//| | |1|
 			eatenPieceGridLocataction = glm::vec2(_startLocation->GetGridLocation().x - 1, _startLocation->GetGridLocation().y - 1);
+			m_foundEatenChecker = true;
 		}
 		if(x == -2 && y == -2)
 		{
@@ -233,6 +234,7 @@ void Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation)
 			//| |0| |
 			//| | |2|
 			eatenPieceGridLocataction = glm::vec2(_startLocation->GetGridLocation().x + 1, _startLocation->GetGridLocation().y + 1);
+			m_foundEatenChecker = true;
 		}
 		if(x == -2 && y == 2)
 		{
@@ -240,13 +242,17 @@ void Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation)
 			//| |0| |
 			//|2| | |
 			eatenPieceGridLocataction = glm::vec2(_startLocation->GetGridLocation().x + 1, _startLocation->GetGridLocation().y - 1);
+			m_foundEatenChecker = true;
 		}
 
 		//delete eaten checkers
-		for (BoardPiece* bit : m_boardPieces)
-			if(bit->GetGridLocation() == eatenPieceGridLocataction)
-				bit->SetOcupied(NULL);
+		if(_deleteFoundCheckers)
+			for (BoardPiece* bit : m_boardPieces)
+				if(bit->GetGridLocation() == eatenPieceGridLocataction)
+					bit->SetOcupied(NULL);
 	}
+
+	return m_foundEatenChecker;
 }
 
 void Board::CheckForKings(BoardPiece* _piece)

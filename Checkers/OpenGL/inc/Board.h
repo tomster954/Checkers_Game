@@ -28,10 +28,8 @@ public:
 	void BlueMoves(BoardPiece* _pieceToMove);
 	void RedMoves(BoardPiece* _pieceToMove);
 
-	void FindEdibleCheckers(glm::vec2 _gridPos);
-
 	void DeselectingPotentialMoves();
-	void FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation);
+	bool FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation, bool _deleteFoundCheckers);
 
 	void SetMustMoves();
 
@@ -56,6 +54,7 @@ private:
 	bool m_blueCanJump;
 	bool m_redCanJump;
 	bool m_moreEdibleBits;
+	bool m_foundEatenChecker;
 
 	bool m_prevMoveColorWasBlack;
 };
