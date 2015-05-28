@@ -25,6 +25,9 @@ public:
 
 	bool GetPieceToMove() { return m_pieceToMove; }
 
+	void SetMustMove(bool _bool) { m_mustMove = _bool; }
+	bool MustMove() { return m_mustMove; }
+
 	glm::vec3 GetPos(){ return m_position; }
 	glm::vec2 GetGridLocation() { return glm::vec2(m_row, m_col); }
 	
@@ -50,7 +53,7 @@ private:
 	bool m_isOcupied; //is true if a checker is on it
 	bool m_potentialMove;
 	bool m_forward;
-
+	bool m_mustMove;
 	bool m_pieceToMove;
 
 	Checker* m_checker;

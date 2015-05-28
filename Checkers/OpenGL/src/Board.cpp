@@ -86,9 +86,11 @@ void Board::CheckForMoves(BoardPiece* _checkerSelected)
 
 void Board::BlueMoves(BoardPiece* _pieceToMove)
 {
+	m_mustMoveThese.clear();
 	//Check For Any movoves
 	if(CanBlueJump())
 	{
+		SetMustMoves();
 		//Move only the pieces in the list that are moveable
 	}
 	else
@@ -129,9 +131,11 @@ void Board::BlueMoves(BoardPiece* _pieceToMove)
 }
 void Board::RedMoves(BoardPiece* _pieceToMove)
 {
+	m_mustMoveThese.clear();
 	//Check For Any movoves
 	if(CanRedJump())
 	{
+ 		SetMustMoves();
 		//Move only the pieces in the list that are moveable
 	}
 	else
@@ -150,22 +154,30 @@ void Board::RedMoves(BoardPiece* _pieceToMove)
 			
 			//piece = bot left	of _pieceToMove
 			if(pieceToMoveRow + 1 == pieceRow && pieceToMoveCol - 1 == pieceCol)
+			{
 				piece->SetPotentialMove(true);
+			}
 				
 			//piece = top left of _pieceToMove
 			if(pieceToMoveRow - 1 == pieceRow && pieceToMoveCol - 1 == pieceCol)
+			{
 				piece->SetPotentialMove(true);
+			}
 
 			//ABILITY TO MOVE BACKWARDS IF KING
 			if(_pieceToMove->GetChecker()->IsKing())
 			{
 				//piece = bot right	of _pieceToMove
 				if(pieceToMoveRow + 1 == pieceRow && pieceToMoveCol + 1 == pieceCol)
+				{
 					piece->SetPotentialMove(true);
+				}
 			
 				//piece = top right of _pieceToMove
 				if(pieceToMoveRow - 1 == pieceRow && pieceToMoveCol + 1 == pieceCol)
+				{
 					piece->SetPotentialMove(true);
+				}
 			}
 		}
 	}
@@ -178,7 +190,10 @@ void Board::FindEdibleCheckers(glm::vec2 _gridPos)
 void Board::DeselectingPotentialMoves()
 {
 	for (BoardPiece* bit : m_boardPieces)
+	{
 		bit->SetPotentialMove(false);
+		bit->SetMustMove(false);
+	}
 }
 
 void Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation)
@@ -430,13 +445,34 @@ bool Board::CanRedJump()
 
 						//push back the piece that has a valid jump.
 						m_mustMoveThese.push_back(&(*piece));
-						break;
+						continue;
 					}
 					else if(itr->GetGridLocation() == glm::vec2(gridPos.x, gridPos.y) && itr->GetOcupied())
-						break;
+						continue;
 				}
 			}
 		}
 	}
 	return m_redCanJump;
+}
+
+void Board::SetMustMoves()
+{
+	for (BoardPiece* piece : m_boardPieces)
+	{
+		piece->SetMustMove(false);
+
+		for (BoardPiece* mustMove : m_mustMoveThese)
+		{
+			//if piece isnt ocupied it cant possibly be equal to one of the must moves
+			if(!piece->GetOcupied())
+				continue;
+
+			//if the piece is equal to one of the must move pieces
+			if(piece->GetGridLocation() == mustMove->GetGridLocation())
+			{
+				piece->SetMustMove(true);
+			}
+		}
+	}
 }

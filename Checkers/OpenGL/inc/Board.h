@@ -33,6 +33,8 @@ public:
 	void DeselectingPotentialMoves();
 	void FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation);
 
+	void SetMustMoves();
+
 	void SetBluesTurn( bool _bluesTurn) { m_blueTurn = _bluesTurn; }
 	bool BluesTurn() { return m_blueTurn; }
 

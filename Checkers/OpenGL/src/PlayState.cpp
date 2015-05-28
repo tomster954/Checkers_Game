@@ -117,7 +117,22 @@ void PlayState::SelectingCheckers()
 			//If you press space on a potential move
 			if(piece->GetGridLocation() == glm::vec2(m_selectedRow, m_selectedCol) && piece->GetPotentialMove())
 			{
-				MoveChecker(piece);			
+				bool canMove = false;
+				float counter = 0; //counts the number of must moves.
+				for (BoardPiece* mustMoves : m_Board->GetBoardPieces())
+				{
+					//if the mustmoves must be moved and the current piece trying to be moved = it
+					if(mustMoves->MustMove())
+					{
+						counter++;
+						
+						if(mustMoves->GetGridLocation() == m_pieceToMove->GetGridLocation())
+							canMove = true;
+					}
+				}
+
+				if(canMove || counter <= 0)
+					MoveChecker(piece);			
 			}
 		}
 	}
@@ -139,19 +154,6 @@ void PlayState::MoveChecker(BoardPiece *_piece)
 	//Check For More moves from where u are now
 	m_pieceToMove = &(*_piece);
 	m_Board->DeselectingPotentialMoves();
-	
-	m_Board->FindEatenPiece(start, m_pieceToMove); //get the start pos and end pos and find the checker bettween and remove it
 
-	//m_pieceToMove = new pos
-	//if its blue and there are no more moves
-	//if(m_pieceToMove->GetChecker()->IsBlack() && !m_Board->MoreBlueMoves())
-	//{
-	// 	m_Board->DeselectingPotentialMoves();
-	//	m_Board->SetBluesTurn(false);
-	//}
-	//if(!m_pieceToMove->GetChecker()->IsBlack() && !m_Board->MoreRedMoves())
-	//{
-	//	m_Board->DeselectingPotentialMoves();
-	//	m_Board->SetBluesTurn(true);
-	//}
+	m_Board->FindEatenPiece(start, m_pieceToMove); //get the start pos and end pos and find the checker bettween and remove it
 }
