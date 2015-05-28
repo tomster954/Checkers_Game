@@ -11,6 +11,7 @@ PlayState::PlayState(GLFWwindow *_pWindow)
 	m_pWindow = _pWindow;
 	m_Board = new Board;
 	m_bluesTurn = false;
+	m_gameOver = false;
 
 	//setting the first board piece as selected
 	for (auto piece : m_Board->GetBoardPieces())
@@ -50,6 +51,8 @@ void PlayState::Update()
 		m_keyPressed = true;
 	else
 		m_keyPressed = false;
+
+	CheckForGameOver();
 }
 
 void PlayState::Draw(Camera *_camera)
@@ -188,4 +191,28 @@ void PlayState::MoveChecker(BoardPiece *_piece)
 
 		m_Board->FindEatenPiece(start, m_pieceToMove, true); //get the start pos and end pos and find the checker bettween and remove it
 		m_Board->CheckForKings();
+}
+
+void PlayState::CheckForGameOver()
+{
+	int blackPiecesCount = 0;
+	int redPiecesCount = 0;
+	for (BoardPiece* piece : m_Board->GetBoardPieces())
+	{
+		if(!piece->GetOcupied())
+			continue;
+
+		//Check is someone has won
+		if(piece->GetChecker()->IsBlack())
+			blackPiecesCount++;
+		
+		if(!piece->GetChecker()->IsBlack())
+			redPiecesCount++;
+	}
+
+	if(blackPiecesCount <= 0)
+		m_gameOver = true;
+
+	if(redPiecesCount <= 0)
+		m_gameOver = true;
 }

@@ -110,6 +110,7 @@ void Board::BlueMoves(BoardPiece* _pieceToMove)
 		}
 	}
 }
+
 void Board::RedMoves(BoardPiece* _pieceToMove)
 {
 	m_mustMoveThese.clear();
@@ -161,92 +162,6 @@ void Board::RedMoves(BoardPiece* _pieceToMove)
 				}
 			}
 		}
-	}
-}
-
-void Board::DeselectingPotentialMoves()
-{
-	for (BoardPiece* bit : m_boardPieces)
-	{
-		bit->SetPotentialMove(false);
-		bit->SetMustMove(false);
-	}
-}
-
-bool Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation, bool _deleteFoundCheckers)
-{
-	m_foundEatenChecker = false;
-
-	float x = _startLocation->GetGridLocation().x - _endLocation->GetGridLocation().x;
-	float y = _startLocation->GetGridLocation().y - _endLocation->GetGridLocation().y; 
-
-	//if the change on the x and y axis has changed 2 places meaning it has jumped something
-	if(abs(x) == 2 && abs(y) == 2)
-	{
-		glm::vec2 eatenPieceGridLocataction = glm::vec2(0);
-		
-		//1 = start pos
-		//2 = end pos
-		//0 = the checker we need to kill
-
-		if(x == 2 && y == -2)
-		{
-			//| | |2|
-			//| |0| |
-			//|1| | |
-			eatenPieceGridLocataction = glm::vec2(_startLocation->GetGridLocation().x - 1, _startLocation->GetGridLocation().y + 1);
-			m_foundEatenChecker = true;
-		}
-		if(x == 2 && y == 2)
-		{
-			//|2| | |
-			//| |0| |
-			//| | |1|
-			eatenPieceGridLocataction = glm::vec2(_startLocation->GetGridLocation().x - 1, _startLocation->GetGridLocation().y - 1);
-			m_foundEatenChecker = true;
-		}
-		if(x == -2 && y == -2)
-		{
-			//|1| | |
-			//| |0| |
-			//| | |2|
-			eatenPieceGridLocataction = glm::vec2(_startLocation->GetGridLocation().x + 1, _startLocation->GetGridLocation().y + 1);
-			m_foundEatenChecker = true;
-		}
-		if(x == -2 && y == 2)
-		{
-			//| | |1|
-			//| |0| |
-			//|2| | |
-			eatenPieceGridLocataction = glm::vec2(_startLocation->GetGridLocation().x + 1, _startLocation->GetGridLocation().y - 1);
-			m_foundEatenChecker = true;
-		}
-
-		//delete eaten checkers
-		if(_deleteFoundCheckers)
-			for (BoardPiece* bit : m_boardPieces)
-				if(bit->GetGridLocation() == eatenPieceGridLocataction)
-					bit->SetOcupied(NULL);
-	}
-
-	return m_foundEatenChecker;
-}
-
-void Board::CheckForKings()
-{
-	for (BoardPiece* piece : m_boardPieces)
-	{
-		//checking if the selected checker has a valid checker
-		if(!piece->GetOcupied())
-			continue;
-
-		if(piece->GetChecker()->IsBlack())
-			if(piece->GetGridLocation().y >=7)
-				piece->GetChecker()->SetKing(true);
-		
-		if(!piece->GetChecker()->IsBlack())
-			if(piece->GetGridLocation().y <=0)
-				piece->GetChecker()->SetKing(true);
 	}
 }
 
@@ -444,6 +359,92 @@ bool Board::CanRedJump()
 		}
 	}
 	return m_redCanJump;
+}
+
+void Board::DeselectingPotentialMoves()
+{
+	for (BoardPiece* bit : m_boardPieces)
+	{
+		bit->SetPotentialMove(false);
+		bit->SetMustMove(false);
+	}
+}
+
+bool Board::FindEatenPiece(BoardPiece *_startLocation, BoardPiece *_endLocation, bool _deleteFoundCheckers)
+{
+	m_foundEatenChecker = false;
+
+	float x = _startLocation->GetGridLocation().x - _endLocation->GetGridLocation().x;
+	float y = _startLocation->GetGridLocation().y - _endLocation->GetGridLocation().y; 
+
+	//if the change on the x and y axis has changed 2 places meaning it has jumped something
+	if(abs(x) == 2 && abs(y) == 2)
+	{
+		glm::vec2 eatenPieceGridLocataction = glm::vec2(0);
+		
+		//1 = start pos
+		//2 = end pos
+		//0 = the checker we need to kill
+
+		if(x == 2 && y == -2)
+		{
+			//| | |2|
+			//| |0| |
+			//|1| | |
+			eatenPieceGridLocataction = glm::vec2(_startLocation->GetGridLocation().x - 1, _startLocation->GetGridLocation().y + 1);
+			m_foundEatenChecker = true;
+		}
+		if(x == 2 && y == 2)
+		{
+			//|2| | |
+			//| |0| |
+			//| | |1|
+			eatenPieceGridLocataction = glm::vec2(_startLocation->GetGridLocation().x - 1, _startLocation->GetGridLocation().y - 1);
+			m_foundEatenChecker = true;
+		}
+		if(x == -2 && y == -2)
+		{
+			//|1| | |
+			//| |0| |
+			//| | |2|
+			eatenPieceGridLocataction = glm::vec2(_startLocation->GetGridLocation().x + 1, _startLocation->GetGridLocation().y + 1);
+			m_foundEatenChecker = true;
+		}
+		if(x == -2 && y == 2)
+		{
+			//| | |1|
+			//| |0| |
+			//|2| | |
+			eatenPieceGridLocataction = glm::vec2(_startLocation->GetGridLocation().x + 1, _startLocation->GetGridLocation().y - 1);
+			m_foundEatenChecker = true;
+		}
+
+		//delete eaten checkers
+		if(_deleteFoundCheckers)
+			for (BoardPiece* bit : m_boardPieces)
+				if(bit->GetGridLocation() == eatenPieceGridLocataction)
+					bit->SetOcupied(NULL);
+	}
+
+	return m_foundEatenChecker;
+}
+
+void Board::CheckForKings()
+{
+	for (BoardPiece* piece : m_boardPieces)
+	{
+		//checking if the selected checker has a valid checker
+		if(!piece->GetOcupied())
+			continue;
+
+		if(piece->GetChecker()->IsBlack())
+			if(piece->GetGridLocation().y >=7)
+				piece->GetChecker()->SetKing(true);
+		
+		if(!piece->GetChecker()->IsBlack())
+			if(piece->GetGridLocation().y <=0)
+				piece->GetChecker()->SetKing(true);
+	}
 }
 
 void Board::SetMustMoves()

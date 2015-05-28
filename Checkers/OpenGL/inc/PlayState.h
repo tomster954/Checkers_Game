@@ -21,6 +21,9 @@ public:
 	void SelectingCheckers();
 	void MoveChecker(BoardPiece *_piece);
 
+	void CheckForGameOver();
+
+	bool IsGameOver(){ return m_gameOver; }
 private:
 	GLFWwindow *m_pWindow;
 	Board *m_Board;
@@ -30,6 +33,7 @@ private:
 
 	bool m_keyPressed;
 	bool m_bluesTurn;
+	bool m_gameOver;
 
 	int m_selectedRow;
 	int m_selectedCol;

@@ -29,6 +29,7 @@ public:
 
 	void Update();
 	void Draw();
+	void ResetGame();
 
 protected:
 

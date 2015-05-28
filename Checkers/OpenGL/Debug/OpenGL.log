@@ -1,4 +1,4 @@
-﻿Build started 28/05/2015 11:53:15 AM.
+﻿Build started 28/05/2015 3:11:31 PM.
      1>Project "C:\Users\tommas.solarino\Documents\Assessment2\Checkers\OpenGL\OpenGL.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I./dep/glfw/include /I./dep/glm /I./dep/aieutilities /I./src /I./inc /I./dep/AntTweakBar/include /I./dep/FBXLoader_2012/include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D GLM_SWIZZLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\PlayState.cpp
@@ -21,4 +21,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.62
+Time Elapsed 00:00:02.56
