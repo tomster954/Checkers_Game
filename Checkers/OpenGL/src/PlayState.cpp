@@ -24,6 +24,11 @@ PlayState::PlayState(GLFWwindow *_pWindow)
 	m_selectedCol = 0;
 
 	m_pieceToMove = new BoardPiece();
+
+	m_project = new glm::mat4(1, 0, 0, 1,
+							0, 1, 0, 1,
+							0, 0, 1, 1,
+							0, 0, 0, 1);
 }
 
 PlayState::~PlayState()
@@ -52,6 +57,16 @@ void PlayState::Draw(Camera *_camera)
 	Gizmos::clear();
 
 	m_Board->Draw();
+
+	glm::vec4 colour;
+
+	if(m_bluesTurn)
+		colour = glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);
+	else
+		colour = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+
+	Gizmos::addAABBFilled(glm::vec3(70, 30, -20), glm::vec3(10, 5, 10), colour, m_project);
+
 
 	Gizmos::draw(_camera->getProjectionView());
 }
@@ -131,12 +146,24 @@ void PlayState::SelectingCheckers()
 				}
 
 				if(canMove)
+				{
  					if(m_Board->FindEatenPiece(m_pieceToMove, piece, false))
+					{
 						MoveChecker(piece);
+						//if there are no other moves to make.
+						if(m_pieceToMove->GetChecker()->IsBlack() && !m_Board->CanBlueJump())
+							m_bluesTurn = !m_bluesTurn;
 
+						if(!m_pieceToMove->GetChecker()->IsBlack() && !m_Board->CanRedJump())
+							m_bluesTurn = !m_bluesTurn;
+					}
+				}
 				//if no mustmove where found
 				if(counter <= 0)
+				{
+					m_bluesTurn = !m_bluesTurn;
 					MoveChecker(piece);
+				}
 			}
 		}
 	}
@@ -161,11 +188,4 @@ void PlayState::MoveChecker(BoardPiece *_piece)
 
 		m_Board->FindEatenPiece(start, m_pieceToMove, true); //get the start pos and end pos and find the checker bettween and remove it
 		m_Board->CheckForKings();
-
-		//if there are no other moves to make.
-		if(m_pieceToMove->GetChecker()->IsBlack() && !m_Board->CanBlueJump())
-			m_bluesTurn = !m_bluesTurn;
-
-		if(!m_pieceToMove->GetChecker()->IsBlack() && !m_Board->CanRedJump())
-			m_bluesTurn = !m_bluesTurn;
 }

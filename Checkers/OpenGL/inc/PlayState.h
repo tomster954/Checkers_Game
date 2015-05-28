@@ -26,6 +26,8 @@ private:
 	Board *m_Board;
 	BoardPiece* m_pieceToMove;
 
+	glm:: mat4* m_project;
+
 	bool m_keyPressed;
 	bool m_bluesTurn;
 
