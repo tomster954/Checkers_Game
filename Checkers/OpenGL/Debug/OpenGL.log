@@ -1,24 +1,5 @@
-﻿Build started 29/05/2015 11:30:09 AM.
-     1>Project "C:\Users\tommas.solarino\Desktop\Checkers\OpenGL\OpenGL.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./dep/glfw/include /I./dep/glm /I./dep/aieutilities /I./src /I./inc /I./dep/AntTweakBar/include /I./dep/RakNet/inc /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D GLM_FORCE_PURE /D _CRT_SECURE_NO_WARNINGS /D GLM_SWIZZLE /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt src\Main.cpp
-         Main.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\tommas.solarino\Desktop\Checkers\Debug\OpenGL.exe" /INCREMENTAL /NOLOGO /LIBPATH:"./dep/glfw/lib-vc2012" /LIBPATH:./dep/AntTweakBar/lib /LIBPATH:./dep/RakNet/lib opengl32.lib glfw3.lib AntTweakBar.lib RakNet_d.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\tommas.solarino\Desktop\Checkers\Debug\OpenGL.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\tommas.solarino\Desktop\Checkers\Debug\OpenGL.lib" /MACHINE:X86 Debug\Gizmos.obj
-         Debug\Application.obj
-         Debug\Board.obj
-         Debug\BoardPieces.obj
-         Debug\Checker.obj
-         Debug\PlayState.obj
-         Debug\ShaderLoader.obj
-         Debug\Camera.obj
-         Debug\gl_core_4_4.obj
-         Debug\GUI_Bar.obj
-         Debug\Main.obj
-     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-         OpenGL.vcxproj -> C:\Users\tommas.solarino\Desktop\Checkers\Debug\OpenGL.exe
-     1>Done Building Project "C:\Users\tommas.solarino\Desktop\Checkers\OpenGL\OpenGL.vcxproj" (Build target(s)).
+﻿Build started 29/05/2015 2:44:31 PM.
 
 Build succeeded.
 
-Time Elapsed 00:00:01.20
+Time Elapsed 00:00:00.02

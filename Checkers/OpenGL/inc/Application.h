@@ -7,9 +7,16 @@
 #define APPLICATION
 
 //Includes
-#include "PlayState.h"
+
+#include <gl_core_4_4.h>
+#include <GLFW/glfw3.h>
+
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
+
+#include "PlayState.h"
+#include "Networking.h"
+
 using glm::vec3;
 using glm::vec4;
 using glm::mat4;
@@ -37,6 +44,7 @@ private:
 	GLFWwindow *m_pWindow;
 	Camera *m_camera;
 	PlayState *m_playState;
+	Networking *m_network;
 
 	bool m_gameOver;
 
