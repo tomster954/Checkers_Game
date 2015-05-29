@@ -1,0 +1,25 @@
+﻿Build started 29/05/2015 1:14:09 PM.
+     1>Project "C:\Users\tommas.solarino\Desktop\Checkers\OpenGL\OpenGL.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./dep/glfw/include /I./dep/glm /I./dep/aieutilities /I./src /I./inc /I./dep/AntTweakBar/include /I./dep/RakNet/inc /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D GLM_FORCE_PURE /D GLM_SWIZZLE /D _CRT_SECURE_NO_WARNINGS /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt src\Main.cpp
+         Main.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\tommas.solarino\Desktop\Checkers\Release\OpenGL.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"./dep/glfw/lib-vc2012" /LIBPATH:./dep/AntTweakBar/lib /LIBPATH:./dep/RakNet/lib opengl32.lib glfw3.lib AntTweakBar.lib RakNet.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\tommas.solarino\Desktop\Checkers\Release\OpenGL.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\tommas.solarino\Desktop\Checkers\Release\OpenGL.lib" /MACHINE:X86 /SAFESEH Release\Gizmos.obj
+         Release\Application.obj
+         Release\Board.obj
+         Release\BoardPieces.obj
+         Release\Checker.obj
+         Release\PlayState.obj
+         Release\ShaderLoader.obj
+         Release\Camera.obj
+         Release\gl_core_4_4.obj
+         Release\GUI_Bar.obj
+         Release\Main.obj
+         Generating code
+         Finished generating code
+         OpenGL.vcxproj -> C:\Users\tommas.solarino\Desktop\Checkers\Release\OpenGL.exe
+     1>Done Building Project "C:\Users\tommas.solarino\Desktop\Checkers\OpenGL\OpenGL.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.67

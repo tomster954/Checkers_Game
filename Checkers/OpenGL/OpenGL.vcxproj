@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -51,14 +51,15 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;GLM_SWIZZLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./dep/glfw/include;./dep/glm;./dep/aieutilities;./src;./inc;./dep/AntTweakBar/include;./dep/FBXLoader_2012/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;GLM_FORCE_PURE;_CRT_SECURE_NO_WARNINGS;GLM_SWIZZLE;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>./dep/glfw/include;./dep/glm;./dep/aieutilities;./src;./inc;./dep/AntTweakBar/include;./dep/RakNet/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>./dep/glfw/lib-vc2012;./dep/AntTweakBar/lib;./dep/FBXLoader_2012/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;AntTweakBar.lib;FBXLoader_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>./dep/glfw/lib-vc2012;./dep/AntTweakBar/lib;./dep/RakNet/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;AntTweakBar.lib;RakNet_d.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -69,29 +70,29 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;GLM_SWIZZLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./dep/glfw/include;./dep/glm;./dep/aieutilities;./src;./inc;./dep/AntTweakBar/include;./dep/FBXLoader_2012/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PreprocessorDefinitions>WIN32;GLM_FORCE_PURE;GLM_SWIZZLE;_CRT_SECURE_NO_WARNINGS;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>./dep/glfw/include;./dep/glm;./dep/aieutilities;./src;./inc;./dep/AntTweakBar/include;./dep/RakNet/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>./dep/glfw/lib-vc2012;./dep/AntTweakBar/lib;./dep/FBXLoader_2012/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;AntTweakBar.lib;FBXLoader_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>./dep/glfw/lib-vc2012;./dep/AntTweakBar/lib;./dep/RakNet/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;AntTweakBar.lib;RakNet.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="dep\aieutilities\Gizmos_fix.cpp" />
+    <ClCompile Include="dep\aieutilities\Gizmos.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Board.cpp" />
     <ClCompile Include="src\BoardPieces.cpp" />
     <ClCompile Include="src\Checker.cpp" />
+    <ClCompile Include="src\Networking.cpp" />
     <ClCompile Include="src\PlayState.cpp" />
     <ClCompile Include="src\ShaderLoader.cpp" />
     <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\FBX_Loader.cpp" />
     <ClCompile Include="src\gl_core_4_4.c" />
     <ClCompile Include="src\GUI_Bar.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -104,9 +105,9 @@
     <ClInclude Include="inc\BoardPieces.h" />
     <ClInclude Include="inc\Camera.h" />
     <ClInclude Include="inc\Checker.h" />
-    <ClInclude Include="inc\FBX_Loader.h" />
     <ClInclude Include="inc\gl_core_4_4.h" />
     <ClInclude Include="inc\GUI_Bar.h" />
+    <ClInclude Include="inc\Networking.h" />
     <ClInclude Include="inc\PlayState.h" />
     <ClInclude Include="inc\ShaderLoader.h" />
   </ItemGroup>

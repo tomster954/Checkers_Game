@@ -15,13 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dep\aieutilities\Gizmos_fix.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FBX_Loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gl_core_4_4.c">
@@ -51,6 +45,12 @@
     <ClCompile Include="src\Board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dep\aieutilities\Gizmos.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Networking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dep\glfw\include\GLFW\glfw3.h">
@@ -66,9 +66,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\GUI_Bar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\FBX_Loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\ShaderLoader.h">
@@ -87,6 +84,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\Board.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Networking.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -13,7 +13,7 @@ Application::Application(glm::vec4 _backgroundColour)
 
 	m_pWindow = glfwCreateWindow(1280, 720, "Checkers Game", nullptr, nullptr);
 
-	m_camera = new Camera(3.14159f * 0.25f, 4.0 / 3.0f, 0.01, 100);
+	m_camera = new Camera(3.14159f * 0.25f, 4.0f / 3.0f, 0.01f, 100);
 	m_camera->setSpeed(100);
 	m_camera->setLookAtFrom(glm::vec3(70, 150, 280), glm::vec3(70, 0, 70));
 
