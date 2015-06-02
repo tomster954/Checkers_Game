@@ -11,7 +11,8 @@
 
 enum GameMessages
 {
-	ID_GAME_MESSAGE_1 = ID_USER_PACKET_ENUM + 1
+	ID_GAME_MESSAGE_1 = ID_USER_PACKET_ENUM + 1,
+	ID_GAME_MESSAGE_2 = ID_USER_PACKET_ENUM + 2
 };
 
 Networking::Networking()
@@ -52,10 +53,17 @@ void Networking::ServerLoop()
 
 			// Use a BitStream to write a custom user message
 			// Bitstreams are easier to use than sending casted structures, and handle endian swapping automatically
-			RakNet::BitStream bsOut;
-			bsOut.Write((RakNet::MessageID)ID_GAME_MESSAGE_1);
-			bsOut.Write("Hello world");
-			m_peer->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, m_packet->systemAddress, false);
+			RakNet::BitStream nameOut;
+			nameOut.Write((RakNet::MessageID)ID_GAME_MESSAGE_1);
+			nameOut.Write(m_name);
+			m_peer->Send(&nameOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, m_packet->systemAddress, false);
+			
+			//bool boolian = true;
+			//RakNet::BitStream whosTurn;
+			//whosTurn.Write((RakNet::MessageID)ID_GAME_MESSAGE_2);
+			//whosTurn.Write(boolian);
+			//m_peer->Send(&whosTurn, HIGH_PRIORITY, RELIABLE_ORDERED, 0, m_packet->systemAddress, false);
+
 		}break;
 
 		case ID_NEW_INCOMING_CONNECTION:
@@ -90,12 +98,25 @@ void Networking::ServerLoop()
 			RakNet::BitStream bsIn(m_packet->data, m_packet->length, false);
 			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
 			bsIn.Read(rs);
-			printf("%s\n", rs.C_String());
+			printf("%s", rs.C_String());
+			printf(" has joined the server\n");
+		}break;
+
+		case ID_GAME_MESSAGE_2:
+		{
+			//you have recived whos turn it is
+			bool rs;
+			RakNet::BitStream bsIn(m_packet->data, m_packet->length, false);
+			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+			bsIn.Read(rs);
+			printf("%s", rs ? "true" : "false");
+
+			printf("Someones turn");
 		}break;
 
 		default:
 		{
-				   printf("Message with identifier %i has arrived.\n", m_packet->data[0]);
+			printf("Message with identifier %i has arrived.\n", m_packet->data[0]);
 		}break;
 		}
 	}
@@ -127,14 +148,26 @@ void Networking::SetUp()
 		// We need to let the server accept incoming connections from the clients
 		m_peer->SetMaximumIncomingConnections(MAX_CLIENTS);
 	}
-	else {
+	else 
+	{
 		printf("Enter server IP or hit enter for 127.0.0.1\n");
 		gets(str);
 		if (str[0] == 0){
 			strcpy(str, "127.0.0.1");
 		}
+
+		printf("Enter your name\n");
+		gets(m_name);
+
 		printf("Starting the client.\n");
 		m_peer->Connect(str, SERVER_PORT, 0, 0);
-
 	}
+}
+
+void Networking::SetWhosTurn(bool _whosTurnIsIt)
+{
+		RakNet::BitStream whosTurn;
+		whosTurn.Write((RakNet::MessageID)ID_GAME_MESSAGE_2);
+		whosTurn.Write(_whosTurnIsIt);
+		m_peer->Send(&whosTurn, HIGH_PRIORITY, RELIABLE_ORDERED, 0, m_packet->systemAddress, false);
 }

@@ -1,12 +1,15 @@
 #include "PlayState.h"
-#include "Camera.h"
-#include "BoardPieces.h"
 
 #include <GLFW/glfw3.h>
 #include <Gizmos.h>
 
+#include "Camera.h"
+#include "BoardPieces.h"
+
 PlayState::PlayState(GLFWwindow *_pWindow)
 {
+	m_network = new Networking();
+
 	Gizmos::create();
 	m_pWindow = _pWindow;
 	m_Board = new Board;
@@ -39,9 +42,23 @@ PlayState::~PlayState()
 
 void PlayState::Update()
 {
-	m_Board->Update();
+	bool yourTurn;
 
-	SelectingCheckers();
+	m_network->ServerLoop();
+
+	m_Board->Update();
+	
+	if (m_network->IsServer() && m_bluesTurn)
+	{
+		m_network->SetWhosTurn(m_bluesTurn);
+		//ToDo tell the client its there turn
+	}
+
+	if (m_network->IsServer() && !m_bluesTurn)
+		SelectingCheckers();
+
+	if (!m_network->IsServer() && m_bluesTurn)
+		SelectingCheckers();
 	
 	if( glfwGetKey(m_pWindow, GLFW_KEY_S) == GLFW_PRESS || 
 		glfwGetKey(m_pWindow, GLFW_KEY_W) == GLFW_PRESS ||
@@ -76,13 +93,14 @@ void PlayState::Draw(Camera *_camera)
 
 void PlayState::SelectingCheckers()
 {
-	if(glfwGetKey(m_pWindow, GLFW_KEY_W) == GLFW_PRESS && m_keyPressed != true)
+	
+	if (glfwGetKey(m_pWindow, GLFW_KEY_W) == GLFW_PRESS && m_keyPressed != true)
 		m_selectedRow -= 1;
-	if(glfwGetKey(m_pWindow, GLFW_KEY_A) == GLFW_PRESS && m_keyPressed != true)
+	if (glfwGetKey(m_pWindow, GLFW_KEY_A) == GLFW_PRESS && m_keyPressed != true)
 		m_selectedCol -= 1;
-	if(glfwGetKey(m_pWindow, GLFW_KEY_S) == GLFW_PRESS && m_keyPressed != true)
+	if (glfwGetKey(m_pWindow, GLFW_KEY_S) == GLFW_PRESS && m_keyPressed != true)
 		m_selectedRow += 1;
-	if(glfwGetKey(m_pWindow, GLFW_KEY_D) == GLFW_PRESS && m_keyPressed != true)
+	if (glfwGetKey(m_pWindow, GLFW_KEY_D) == GLFW_PRESS && m_keyPressed != true)
 		m_selectedCol += 1;
 
 	//Borders

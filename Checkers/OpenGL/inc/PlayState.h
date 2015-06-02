@@ -5,9 +5,11 @@
 #ifndef PLAY_STATE_H
 #define PLAY_STATE_H
 
+#include <vector>
+
+#include "Networking.h"
 #include "Camera.h"
 #include "Board.h"
-#include <vector>
 
 struct GLFWwindow;
 
@@ -28,6 +30,8 @@ private:
 	GLFWwindow *m_pWindow;
 	Board *m_Board;
 	BoardPiece* m_pieceToMove;
+
+	Networking* m_network;
 
 	glm:: mat4* m_project;
 

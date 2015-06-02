@@ -20,10 +20,15 @@ public:
 
 	void SetUp();
 	
+	bool IsServer(){ return m_isServer; }
+	void SetWhosTurn(bool _whosTurnIsIt);
+
 private:
 	RakNet::Packet* m_packet;
 	RakNet::RakPeerInterface *m_peer;
 
 	bool m_isServer;
+
+	char m_name[255];
 };
 #endif

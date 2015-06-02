@@ -1,5 +1,64 @@
-﻿Build started 29/05/2015 2:44:31 PM.
+﻿Build started 1/06/2015 7:31:27 PM.
+     1>Project "D:\GitHubRepositorys\Assessment2\Checkers\OpenGL\OpenGL.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\VisualStudio2013\VC\bin\CL.exe /c /I./dep/glfw/include /I./dep/glm /I./dep/aieutilities /I./src /I./inc /I./dep/AntTweakBar/include /I./dep/RakNet/inc /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D GLM_FORCE_PURE /D _CRT_SECURE_NO_WARNINGS /D GLM_SWIZZLE /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt dep\aieutilities\Gizmos.cpp src\Application.cpp src\Board.cpp src\BoardPieces.cpp src\Checker.cpp src\Networking.cpp src\PlayState.cpp src\ShaderLoader.cpp src\Camera.cpp src\GUI_Bar.cpp src\Main.cpp
+         Main.cpp
+         GUI_Bar.cpp
+         Camera.cpp
+         ShaderLoader.cpp
+         PlayState.cpp
+         Networking.cpp
+         Checker.cpp
+         BoardPieces.cpp
+         Board.cpp
+         Application.cpp
+         Gizmos.cpp
+         Generating Code...
+         D:\VisualStudio2013\VC\bin\CL.exe /c /I./dep/glfw/include /I./dep/glm /I./dep/aieutilities /I./src /I./inc /I./dep/AntTweakBar/include /I./dep/RakNet/inc /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D GLM_FORCE_PURE /D _CRT_SECURE_NO_WARNINGS /D GLM_SWIZZLE /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt src\gl_core_4_4.c
+         gl_core_4_4.c
+       Link:
+         D:\VisualStudio2013\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHubRepositorys\Assessment2\Checkers\Debug\OpenGL.exe" /INCREMENTAL /NOLOGO /LIBPATH:"./dep/glfw/lib-vc2012" /LIBPATH:./dep/AntTweakBar/lib /LIBPATH:./dep/RakNet/lib opengl32.lib glfw3.lib AntTweakBar.lib RakNet_d.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHubRepositorys\Assessment2\Checkers\Debug\OpenGL.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHubRepositorys\Assessment2\Checkers\Debug\OpenGL.lib" /MACHINE:X86 Debug\Gizmos.obj
+         Debug\Application.obj
+         Debug\Board.obj
+         Debug\BoardPieces.obj
+         Debug\Checker.obj
+         Debug\Networking.obj
+         Debug\PlayState.obj
+         Debug\ShaderLoader.obj
+         Debug\Camera.obj
+         Debug\gl_core_4_4.obj
+         Debug\GUI_Bar.obj
+         Debug\Main.obj
+     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>RakNet_d.lib(BitStream.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(BitStream.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(CCRakNetSlidingWindow.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(CCRakNetSlidingWindow.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(DR_SHA1.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(DR_SHA1.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(DS_ByteQueue.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(DS_ByteQueue.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(DS_HuffmanEncodingTree.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(DS_HuffmanEncodingTree.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(GetTime.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(GetTime.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(Itoa.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(Itoa.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(LocklessTypes.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(LocklessTypes.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(PluginInterface2.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(PluginInterface2.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(RakMemoryOverride.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(RakMemoryOverride.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(RakNetSocket2.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(RakNetSocket2.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(RakNetTypes.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(RakNetTypes.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(RakPeer.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(RakPeer.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(RakSleep.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(RakSleep.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(RakString.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(RakString.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(RakThread.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(RakThread.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(Rand.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(Rand.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(ReliabilityLayer.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(ReliabilityLayer.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(SignaledEvent.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(SignaledEvent.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(SimpleMutex.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(SimpleMutex.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(SocketLayer.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(SocketLayer.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(StringCompressor.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(StringCompressor.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(StringTable.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(StringTable.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(SuperFastHash.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(SuperFastHash.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(TCPInterface.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(TCPInterface.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+     1>RakNet_d.lib(WSAStartupSingleton.obj) : warning LNK4099: PDB 'raknet_vs2008_libstatic_debug_win32.pdb' was not found with 'RakNet_d.lib(WSAStartupSingleton.obj)' or at 'D:\GitHubRepositorys\Assessment2\Checkers\Debug\raknet_vs2008_libstatic_debug_win32.pdb'; linking object as if no debug info
+         OpenGL.vcxproj -> D:\GitHubRepositorys\Assessment2\Checkers\Debug\OpenGL.exe
+     1>Done Building Project "D:\GitHubRepositorys\Assessment2\Checkers\OpenGL\OpenGL.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.02
+Time Elapsed 00:00:24.21

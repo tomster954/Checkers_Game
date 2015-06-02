@@ -43,7 +43,6 @@ Application::Application(glm::vec4 _backgroundColour)
 	m_lastTime		= 0.0f;
 
 	m_playState = new PlayState(m_pWindow);
-	m_network = new Networking();
 }
 
 //Destructor
@@ -70,8 +69,6 @@ void Application::Update()
 {
 	if(m_playState->IsGameOver())
 		ResetGame();
-
-	m_network->ServerLoop();
 
 	m_currentTime	= (float)glfwGetTime();
 	m_deltaTime		= m_currentTime - m_lastTime; // prev of last frame
