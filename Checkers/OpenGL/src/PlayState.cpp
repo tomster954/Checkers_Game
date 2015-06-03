@@ -42,21 +42,22 @@ PlayState::~PlayState()
 
 void PlayState::Update()
 {
-	bool yourTurn;
-
 	m_network->ServerLoop();
-
 	m_Board->Update();
-	
-	if (m_network->IsServer() && m_bluesTurn)
-	{
-		m_network->SetWhosTurn(m_bluesTurn);
-		//ToDo tell the client its there turn
-	}
 
+	//if its the console and blues move it true
+	if (!m_network->IsServer() && m_network->BluesTurn() == true)
+		m_bluesTurn = m_network->BluesTurn();
+
+	//if its the server and blues move is false
+	if (m_network->IsServer() && m_network->BluesTurn() == false)
+		m_bluesTurn = m_network->BluesTurn();
+
+	//if this is the server and its the servers turn
 	if (m_network->IsServer() && !m_bluesTurn)
 		SelectingCheckers();
 
+	//if this is the console and its the consols turn
 	if (!m_network->IsServer() && m_bluesTurn)
 		SelectingCheckers();
 	
@@ -172,11 +173,17 @@ void PlayState::SelectingCheckers()
 					{
 						MoveChecker(piece);
 						//if there are no other moves to make.
-						if(m_pieceToMove->GetChecker()->IsBlack() && !m_Board->CanBlueJump())
+						if (m_pieceToMove->GetChecker()->IsBlack() && !m_Board->CanBlueJump())
+						{
 							m_bluesTurn = !m_bluesTurn;
+							m_network->SetWhosTurn(m_bluesTurn);
+						}
 
-						if(!m_pieceToMove->GetChecker()->IsBlack() && !m_Board->CanRedJump())
+						if (!m_pieceToMove->GetChecker()->IsBlack() && !m_Board->CanRedJump())
+						{
 							m_bluesTurn = !m_bluesTurn;
+							m_network->SetWhosTurn(m_bluesTurn);
+						}
 					}
 				}
 				//if no mustmove where found
@@ -184,6 +191,7 @@ void PlayState::SelectingCheckers()
 				{
 					m_bluesTurn = !m_bluesTurn;
 					MoveChecker(piece);
+					m_network->SetWhosTurn(m_bluesTurn);
 				}
 			}
 		}

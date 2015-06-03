@@ -18,6 +18,7 @@ enum GameMessages
 Networking::Networking()
 {
 	m_peer = RakNet::RakPeerInterface::GetInstance();
+	m_serversTurn = false;
 
 	SetUp();
 }
@@ -30,6 +31,8 @@ void Networking::ServerLoop()
 {
 	for (m_packet = m_peer->Receive(); m_packet; m_peer->DeallocatePacket(m_packet), m_packet = m_peer->Receive())
 	{
+		m_systemAddress = m_packet->systemAddress;
+
 		switch (m_packet->data[0])
 		{
 		case ID_REMOTE_DISCONNECTION_NOTIFICATION:
@@ -57,13 +60,6 @@ void Networking::ServerLoop()
 			nameOut.Write((RakNet::MessageID)ID_GAME_MESSAGE_1);
 			nameOut.Write(m_name);
 			m_peer->Send(&nameOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, m_packet->systemAddress, false);
-			
-			//bool boolian = true;
-			//RakNet::BitStream whosTurn;
-			//whosTurn.Write((RakNet::MessageID)ID_GAME_MESSAGE_2);
-			//whosTurn.Write(boolian);
-			//m_peer->Send(&whosTurn, HIGH_PRIORITY, RELIABLE_ORDERED, 0, m_packet->systemAddress, false);
-
 		}break;
 
 		case ID_NEW_INCOMING_CONNECTION:
@@ -109,9 +105,11 @@ void Networking::ServerLoop()
 			RakNet::BitStream bsIn(m_packet->data, m_packet->length, false);
 			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
 			bsIn.Read(rs);
+
+			m_serversTurn = rs;
 			printf("%s", rs ? "true" : "false");
 
-			printf("Someones turn");
+			printf("\nSomeones turn\n");
 		}break;
 
 		default:
@@ -166,8 +164,10 @@ void Networking::SetUp()
 
 void Networking::SetWhosTurn(bool _whosTurnIsIt)
 {
-		RakNet::BitStream whosTurn;
-		whosTurn.Write((RakNet::MessageID)ID_GAME_MESSAGE_2);
-		whosTurn.Write(_whosTurnIsIt);
-		m_peer->Send(&whosTurn, HIGH_PRIORITY, RELIABLE_ORDERED, 0, m_packet->systemAddress, false);
+	m_serversTurn = _whosTurnIsIt;
+
+	RakNet::BitStream whosTurn;
+	whosTurn.Write((RakNet::MessageID)ID_GAME_MESSAGE_2);
+	whosTurn.Write(_whosTurnIsIt);
+	m_peer->Send(&whosTurn, HIGH_PRIORITY, RELIABLE_ORDERED, 0, m_systemAddress, false);
 }

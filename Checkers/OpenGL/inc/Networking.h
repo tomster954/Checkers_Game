@@ -22,12 +22,16 @@ public:
 	
 	bool IsServer(){ return m_isServer; }
 	void SetWhosTurn(bool _whosTurnIsIt);
+	bool BluesTurn(){ return m_serversTurn; }
 
 private:
 	RakNet::Packet* m_packet;
 	RakNet::RakPeerInterface *m_peer;
 
+	RakNet::SystemAddress m_systemAddress;
+
 	bool m_isServer;
+	bool m_serversTurn;
 
 	char m_name[255];
 };
