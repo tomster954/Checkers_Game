@@ -21,7 +21,7 @@ public:
 	void Update();
 	void Draw(Camera *_camera);
 	void SelectingCheckers();
-	void MoveChecker(BoardPiece *_piece);
+	void MoveChecker(glm::vec2 _piecePos);
 
 	void CheckForGameOver();
 
@@ -33,7 +33,7 @@ private:
 
 	Networking* m_network;
 
-	glm:: mat4* m_project;
+	glm::mat4* m_project;
 
 	bool m_keyPressed;
 	bool m_bluesTurn;

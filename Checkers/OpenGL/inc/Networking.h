@@ -9,6 +9,9 @@
 
 #include "RakNetTypes.h"
 
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
+
 class Networking
 {
 public:
@@ -22,7 +25,15 @@ public:
 	
 	bool IsServer(){ return m_isServer; }
 	void SetWhosTurn(bool _whosTurnIsIt);
+	void SendPieceThatMoved(glm::vec2 _piecePos, glm::vec2 _endPos);
+
 	bool BluesTurn(){ return m_serversTurn; }
+
+	bool RecievedPieceToMove(){ return m_isThereAPieceToMove; }
+	void RecievedPieceToMove(bool _bool){ m_isThereAPieceToMove = _bool; }
+	
+	glm::vec2 GetPieceToMove(){ return m_startPos; }
+	glm::vec2 GetEndPos(){ return m_endPos; }
 
 private:
 	RakNet::Packet* m_packet;
@@ -32,6 +43,11 @@ private:
 
 	bool m_isServer;
 	bool m_serversTurn;
+
+	bool m_isThereAPieceToMove;
+	
+	glm::vec2 m_startPos;
+	glm::vec2 m_endPos;
 
 	char m_name[255];
 };

@@ -43,6 +43,22 @@ PlayState::~PlayState()
 void PlayState::Update()
 {
 	m_network->ServerLoop();
+	
+	//if there is a piece to move from the server move it.
+	if (m_network->RecievedPieceToMove())
+	{
+		BoardPiece* endPos = NULL;
+		for (BoardPiece* piece : m_Board->GetBoardPieces())
+		{
+			if (piece->GetGridLocation() == m_network->GetPieceToMove())
+				m_pieceToMove = piece;				
+		}
+		if (m_pieceToMove->GetOcupied() == true)
+			MoveChecker(m_network->GetEndPos());
+
+		m_network->RecievedPieceToMove(false);
+	}
+
 	m_Board->Update();
 
 	//if its the console and blues move it true
@@ -171,7 +187,8 @@ void PlayState::SelectingCheckers()
 				{
  					if(m_Board->FindEatenPiece(m_pieceToMove, piece, false))
 					{
-						MoveChecker(piece);
+						m_network->SendPieceThatMoved(m_pieceToMove->GetGridLocation(), piece->GetGridLocation());
+						MoveChecker(piece->GetGridLocation());
 						//if there are no other moves to make.
 						if (m_pieceToMove->GetChecker()->IsBlack() && !m_Board->CanBlueJump())
 						{
@@ -190,7 +207,8 @@ void PlayState::SelectingCheckers()
 				if(counter <= 0)
 				{
 					m_bluesTurn = !m_bluesTurn;
-					MoveChecker(piece);
+					m_network->SendPieceThatMoved(m_pieceToMove->GetGridLocation(), piece->GetGridLocation());
+					MoveChecker(piece->GetGridLocation());
 					m_network->SetWhosTurn(m_bluesTurn);
 				}
 			}
@@ -198,25 +216,37 @@ void PlayState::SelectingCheckers()
 	}
 }
 
-void PlayState::MoveChecker(BoardPiece *_piece)
+void PlayState::MoveChecker(glm::vec2 _piecePos)
 {
-		//Move the selecte checker to piece
-		m_pieceToMove->GetChecker()->Move(m_selectedRow, m_selectedCol);
-		
-		//set the new spot to ocupied witht the checker that moved
-		_piece->SetOcupied(m_pieceToMove->GetChecker());
-		
-		BoardPiece *start = &(*m_pieceToMove);
+	//piece will be a potential move
+	BoardPiece* endPos = new BoardPiece();
 
-		//set the place the checker moved from to empty
-		m_pieceToMove->SetOcupied(NULL);
-		
-		//Check For More moves from where u are now
-		m_pieceToMove = &(*_piece);
-		m_Board->DeselectingPotentialMoves();
+	for (BoardPiece* piece : m_Board->GetBoardPieces())
+		if (piece->GetGridLocation() == _piecePos)
+			endPos = &(*piece);
+	
+	if (endPos == NULL)
+		return;
+	if (m_pieceToMove->GetOcupied() == false || m_pieceToMove->GetChecker() == NULL)
+		return;
 
-		m_Board->FindEatenPiece(start, m_pieceToMove, true); //get the start pos and end pos and find the checker bettween and remove it
-		m_Board->CheckForKings();
+	//Move the selected checker to piece
+	m_pieceToMove->GetChecker()->Move(endPos->GetGridLocation().x, endPos->GetGridLocation().y);
+	
+	//set the new spot to ocupied witht the checker that moved
+	endPos->SetOcupied(m_pieceToMove->GetChecker());
+	
+	BoardPiece *start = &(*m_pieceToMove);
+
+	//set the place the checker moved from to empty
+	m_pieceToMove->SetOcupied(NULL);
+	
+	//Check For More moves from where u are now
+	m_pieceToMove = &(*endPos);
+	m_Board->DeselectingPotentialMoves();
+
+	m_Board->FindEatenPiece(start, m_pieceToMove, true); //get the start pos and end pos and find the checker bettween and remove it
+	m_Board->CheckForKings();
 }
 
 void PlayState::CheckForGameOver()

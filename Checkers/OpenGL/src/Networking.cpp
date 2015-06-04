@@ -12,7 +12,9 @@
 enum GameMessages
 {
 	ID_GAME_MESSAGE_1 = ID_USER_PACKET_ENUM + 1,
-	ID_GAME_MESSAGE_2 = ID_USER_PACKET_ENUM + 2
+	ID_GAME_MESSAGE_2,
+	ID_GAME_MESSAGE_3,
+
 };
 
 Networking::Networking()
@@ -29,6 +31,8 @@ Networking::~Networking()
 }
 void Networking::ServerLoop()
 {
+	m_isThereAPieceToMove = false;
+
 	for (m_packet = m_peer->Receive(); m_packet; m_peer->DeallocatePacket(m_packet), m_packet = m_peer->Receive())
 	{
 		m_systemAddress = m_packet->systemAddress;
@@ -97,7 +101,6 @@ void Networking::ServerLoop()
 			printf("%s", rs.C_String());
 			printf(" has joined the server\n");
 		}break;
-
 		case ID_GAME_MESSAGE_2:
 		{
 			//you have recived whos turn it is
@@ -110,6 +113,18 @@ void Networking::ServerLoop()
 			printf("%s", rs ? "true" : "false");
 
 			printf("\nSomeones turn\n");
+		}break;
+		case ID_GAME_MESSAGE_3:
+		{
+			//you have recived which piece moved
+			glm::vec4 rs;
+			RakNet::BitStream bsIn(m_packet->data, m_packet->length, false);
+			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+			bsIn.Read(rs);
+			m_startPos = glm::vec2(rs.x, rs.y);
+			m_endPos = glm::vec2(rs.z, rs.w);
+			printf("\nSomeoneHas Moved\n");
+			m_isThereAPieceToMove = true;
 		}break;
 
 		default:
@@ -170,4 +185,14 @@ void Networking::SetWhosTurn(bool _whosTurnIsIt)
 	whosTurn.Write((RakNet::MessageID)ID_GAME_MESSAGE_2);
 	whosTurn.Write(_whosTurnIsIt);
 	m_peer->Send(&whosTurn, HIGH_PRIORITY, RELIABLE_ORDERED, 0, m_systemAddress, false);
+}
+
+void Networking::SendPieceThatMoved(glm::vec2 _piecePos, glm::vec2 _endPos)
+{
+	glm::vec4 startAndEndPos = glm::vec4(_piecePos.x, _piecePos.y, _endPos.x, _endPos.y);
+
+	RakNet::BitStream piecePos;
+	piecePos.Write((RakNet::MessageID)ID_GAME_MESSAGE_3);
+	piecePos.Write(startAndEndPos);
+	m_peer->Send(&piecePos, HIGH_PRIORITY, RELIABLE_ORDERED, 0, m_systemAddress, false);
 }
