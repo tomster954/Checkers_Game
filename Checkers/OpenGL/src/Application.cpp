@@ -67,9 +67,6 @@ void Application::RunGame()
 
 void Application::Update()
 {
-	if(m_playState->IsGameOver())
-		ResetGame();
-
 	m_currentTime	= (float)glfwGetTime();
 	m_deltaTime		= m_currentTime - m_lastTime; // prev of last frame
 	m_lastTime		= m_currentTime;
@@ -83,11 +80,4 @@ void Application::Draw()
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 	
 	m_playState->Draw(m_camera);
-}
-
-void Application::ResetGame()
-{
-	delete m_playState;
-
-	m_playState = new PlayState(m_pWindow);
 }

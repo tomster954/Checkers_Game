@@ -12,22 +12,8 @@ PlayState::PlayState(GLFWwindow *_pWindow)
 
 	Gizmos::create();
 	m_pWindow = _pWindow;
-	m_Board = new Board;
-	m_bluesTurn = false;
-	m_gameOver = false;
-
-	//setting the first board piece as selected
-	for (auto piece : m_Board->GetBoardPieces())
-		if(piece->GetGridLocation() == glm::vec2(0, 0))
-		{
-			piece->SetSelected(true);
-			break;
-		}
 	
-	m_selectedRow = 0;
-	m_selectedCol = 0;
-
-	m_pieceToMove = new BoardPiece();
+	ResetGame();
 
 	m_project = new glm::mat4(1, 0, 0, 1,
 							0, 1, 0, 1,
@@ -37,7 +23,9 @@ PlayState::PlayState(GLFWwindow *_pWindow)
 
 PlayState::~PlayState()
 {
-
+	delete m_Board;
+	delete m_pieceToMove;
+	delete m_project;
 }
 
 void PlayState::Update()
@@ -267,8 +255,31 @@ void PlayState::CheckForGameOver()
 	}
 
 	if(blackPiecesCount <= 0)
-		m_gameOver = true;
+		ResetGame();
 
-	if(redPiecesCount <= 0)
-		m_gameOver = true;
+	if (redPiecesCount <= 0)
+		ResetGame();
+
+	if (m_network->ResetGame())
+		ResetGame();
+}
+
+void PlayState::ResetGame()
+{
+	m_Board = new Board;
+	m_bluesTurn = false;
+	m_gameOver = false;
+
+	//setting the first board piece as selected
+	for (auto piece : m_Board->GetBoardPieces())
+	if (piece->GetGridLocation() == glm::vec2(0, 0))
+	{
+		piece->SetSelected(true);
+		break;
+	}
+
+	m_selectedRow = 0;
+	m_selectedCol = 0;
+
+	m_pieceToMove = new BoardPiece();
 }

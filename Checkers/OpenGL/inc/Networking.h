@@ -31,9 +31,11 @@ public:
 
 	bool RecievedPieceToMove(){ return m_isThereAPieceToMove; }
 	void RecievedPieceToMove(bool _bool){ m_isThereAPieceToMove = _bool; }
-	
+
 	glm::vec2 GetPieceToMove(){ return m_startPos; }
 	glm::vec2 GetEndPos(){ return m_endPos; }
+
+	bool ResetGame(){ return m_shouldReset; }
 
 private:
 	RakNet::Packet* m_packet;
@@ -43,6 +45,8 @@ private:
 
 	bool m_isServer;
 	bool m_serversTurn;
+
+	bool m_shouldReset;
 
 	bool m_isThereAPieceToMove;
 	

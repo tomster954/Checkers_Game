@@ -24,8 +24,8 @@ public:
 	void MoveChecker(glm::vec2 _piecePos);
 
 	void CheckForGameOver();
+	void ResetGame();
 
-	bool IsGameOver(){ return m_gameOver; }
 private:
 	GLFWwindow *m_pWindow;
 	Board *m_Board;

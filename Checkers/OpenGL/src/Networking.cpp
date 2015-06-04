@@ -32,6 +32,7 @@ Networking::~Networking()
 void Networking::ServerLoop()
 {
 	m_isThereAPieceToMove = false;
+	m_shouldReset = false;
 
 	for (m_packet = m_peer->Receive(); m_packet; m_peer->DeallocatePacket(m_packet), m_packet = m_peer->Receive())
 	{
@@ -39,98 +40,88 @@ void Networking::ServerLoop()
 
 		switch (m_packet->data[0])
 		{
-		case ID_REMOTE_DISCONNECTION_NOTIFICATION:
-		{
-			printf("Another client has disconnected.\n");
-		}break;
-
-		case ID_REMOTE_CONNECTION_LOST:
-		{
-			printf("Another client has lost the connection.\n");
-		}break;
-
-		case ID_REMOTE_NEW_INCOMING_CONNECTION:
-		{
-			printf("Another client has connected.\n");
-		}break;
-
-		case ID_CONNECTION_REQUEST_ACCEPTED:
-		{
-			printf("Our connection request has been accepted.\n");
-
-			// Use a BitStream to write a custom user message
-			// Bitstreams are easier to use than sending casted structures, and handle endian swapping automatically
-			RakNet::BitStream nameOut;
-			nameOut.Write((RakNet::MessageID)ID_GAME_MESSAGE_1);
-			nameOut.Write(m_name);
-			m_peer->Send(&nameOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, m_packet->systemAddress, false);
-		}break;
-
-		case ID_NEW_INCOMING_CONNECTION:
-		{
-			printf("A connection is incoming.\n");
-		}break;
-
-		case ID_NO_FREE_INCOMING_CONNECTIONS:
-		{
-			printf("The server is full.\n");
-		}break;
-
-		case ID_DISCONNECTION_NOTIFICATION:
-		{
-			if (m_isServer)
-			  printf("A client has disconnected.\n");
-			else
-			  printf("We have been disconnected.\n");
-		}break;
-
-		case ID_CONNECTION_LOST:
-		{
-			if (m_isServer)
-			   printf("A client lost the connection.\n");
-			else
-			   printf("Connection lost.\n");
-		}break;
-
-		case ID_GAME_MESSAGE_1:
-		{
-			RakNet::RakString rs;
-			RakNet::BitStream bsIn(m_packet->data, m_packet->length, false);
-			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
-			bsIn.Read(rs);
-			printf("%s", rs.C_String());
-			printf(" has joined the server\n");
-		}break;
-		case ID_GAME_MESSAGE_2:
-		{
-			//you have recived whos turn it is
-			bool rs;
-			RakNet::BitStream bsIn(m_packet->data, m_packet->length, false);
-			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
-			bsIn.Read(rs);
-
-			m_serversTurn = rs;
-			printf("%s", rs ? "true" : "false");
-
-			printf("\nSomeones turn\n");
-		}break;
-		case ID_GAME_MESSAGE_3:
-		{
-			//you have recived which piece moved
-			glm::vec4 rs;
-			RakNet::BitStream bsIn(m_packet->data, m_packet->length, false);
-			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
-			bsIn.Read(rs);
-			m_startPos = glm::vec2(rs.x, rs.y);
-			m_endPos = glm::vec2(rs.z, rs.w);
-			printf("\nSomeoneHas Moved\n");
-			m_isThereAPieceToMove = true;
-		}break;
-
-		default:
-		{
-			printf("Message with identifier %i has arrived.\n", m_packet->data[0]);
-		}break;
+			case ID_GAME_MESSAGE_1:
+			{
+				//When a Client joins it will say who joined in the server.
+				RakNet::RakString rs;
+				RakNet::BitStream bsIn(m_packet->data, m_packet->length, false);
+				bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+				bsIn.Read(rs);
+				printf("%s", rs.C_String());
+				printf(" has joined the server\n");
+			}break;
+			case ID_GAME_MESSAGE_2:
+			{
+				//you have recived whos turn it is as a bool bluesTurn, if true its blues turn
+				bool rs;
+				RakNet::BitStream bsIn(m_packet->data, m_packet->length, false);
+				bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+				bsIn.Read(rs);
+				m_serversTurn = rs;
+			}break;
+			case ID_GAME_MESSAGE_3:
+			{
+				//you have recived a vec4 containing the grid location of the piece that moved and where it moved to.
+				//The Start pos is x, y. The End pos is z, w.
+				glm::vec4 rs;
+				RakNet::BitStream bsIn(m_packet->data, m_packet->length, false);
+				bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+				bsIn.Read(rs);
+				m_startPos = glm::vec2(rs.x, rs.y);
+				m_endPos = glm::vec2(rs.z, rs.w);
+				m_isThereAPieceToMove = true;
+			}break;
+			case ID_CONNECTION_REQUEST_ACCEPTED:
+			{
+				printf("Our connection request has been accepted.\n");
+				//Reset the board if you get accepted into a game.
+				m_shouldReset = true;
+				//Send the Name of the client to the server.
+				RakNet::BitStream nameOut;
+				nameOut.Write((RakNet::MessageID)ID_GAME_MESSAGE_1);
+				nameOut.Write(m_name);
+				m_peer->Send(&nameOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, m_packet->systemAddress, false);
+			}break;
+			case ID_NEW_INCOMING_CONNECTION:
+			{
+				//Reset the board if there is an incomming connection
+				m_shouldReset = true;
+				printf("A connection is incoming.\n");
+			}break;
+			case ID_REMOTE_DISCONNECTION_NOTIFICATION:
+			{
+				printf("Another client has disconnected.\n");
+			}break;
+			case ID_REMOTE_CONNECTION_LOST:
+			{
+				printf("Another client has lost the connection.\n");
+			}break;
+			case ID_REMOTE_NEW_INCOMING_CONNECTION:
+			{
+				printf("Another client has connected.\n");
+			}break;
+			case ID_NO_FREE_INCOMING_CONNECTIONS:
+			{
+				printf("The server is full.\n");
+			}break;
+			case ID_DISCONNECTION_NOTIFICATION:
+			{
+				if (m_isServer)
+				  printf("A client has disconnected.\n");
+				else
+				  printf("We have been disconnected.\n");
+			}break;
+			case ID_CONNECTION_LOST:
+			{
+				if (m_isServer)
+					printf("A client lost the connection.\n");
+				else
+					printf("Connection lost.\n");
+			}break;
+			default:
+			{
+				printf("Message with identifier %i has arrived.\n", m_packet->data[0]);
+			}break;
 		}
 	}
 }
