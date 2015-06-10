@@ -5,7 +5,5 @@ Checkers/OpenGL.v11.suo
 *.tlog
 *.lastbuildstate
 *.idb
-*.pdb
 *.ilk
-*.exe
 *.opensdf
