@@ -1,13 +1,24 @@
-﻿Build started 4/06/2015 1:53:43 PM.
-     1>Project "C:\Users\tommas.solarino\Documents\Assessment2\Checkers\OpenGL\OpenGL.vcxproj" on node 2 (Build target(s)).
+﻿Build started 10/06/2015 3:04:22 PM.
+     1>Project "D:\GitHubRepositorys\Assessment2\Checkers\OpenGL\OpenGL.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./dep/glfw/include /I./dep/glm /I./dep/aieutilities /I./src /I./inc /I./dep/AntTweakBar/include /I./dep/RakNet/inc /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D GLM_FORCE_PURE /D _CRT_SECURE_NO_WARNINGS /D GLM_SWIZZLE /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt src\Application.cpp src\Main.cpp
-         Application.cpp
-         Generating Code...
-         Skipping... (no relevant changes detected)
+         D:\VisualStudio2013\VC\bin\CL.exe /c /I./dep/glfw/include /I./dep/glm /I./dep/aieutilities /I./src /I./inc /I./dep/AntTweakBar/include /I./dep/RakNet/inc /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D GLM_FORCE_PURE /D _CRT_SECURE_NO_WARNINGS /D GLM_SWIZZLE /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt dep\aieutilities\Gizmos.cpp src\Application.cpp src\Board.cpp src\BoardPieces.cpp src\Checker.cpp src\Networking.cpp src\PlayState.cpp src\ShaderLoader.cpp src\Camera.cpp src\GUI_Bar.cpp src\Main.cpp
          Main.cpp
+         GUI_Bar.cpp
+         Camera.cpp
+         ShaderLoader.cpp
+         PlayState.cpp
+     1>d:\githubrepositorys\assessment2\checkers\opengl\src\playstate.cpp(222): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+         Networking.cpp
+         Checker.cpp
+         BoardPieces.cpp
+         Board.cpp
+         Application.cpp
+         Gizmos.cpp
+         Generating Code...
+         D:\VisualStudio2013\VC\bin\CL.exe /c /I./dep/glfw/include /I./dep/glm /I./dep/aieutilities /I./src /I./inc /I./dep/AntTweakBar/include /I./dep/RakNet/inc /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D GLM_FORCE_PURE /D _CRT_SECURE_NO_WARNINGS /D GLM_SWIZZLE /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt src\gl_core_4_4.c
+         gl_core_4_4.c
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\tommas.solarino\Documents\Assessment2\Checkers\Debug\OpenGL.exe" /INCREMENTAL /NOLOGO /LIBPATH:"./dep/glfw/lib-vc2012" /LIBPATH:./dep/AntTweakBar/lib /LIBPATH:./dep/RakNet/lib opengl32.lib glfw3.lib AntTweakBar.lib RakNet_d.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\tommas.solarino\Documents\Assessment2\Checkers\Debug\OpenGL.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\tommas.solarino\Documents\Assessment2\Checkers\Debug\OpenGL.lib" /MACHINE:X86 Debug\Gizmos.obj
+         D:\VisualStudio2013\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHubRepositorys\Assessment2\Checkers\Debug\OpenGL.exe" /INCREMENTAL /NOLOGO /LIBPATH:"./dep/glfw/lib-vc2012" /LIBPATH:./dep/AntTweakBar/lib /LIBPATH:./dep/RakNet/lib opengl32.lib glfw3.lib AntTweakBar.lib RakNet_d.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHubRepositorys\Assessment2\Checkers\Debug\OpenGL.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHubRepositorys\Assessment2\Checkers\Debug\OpenGL.lib" /MACHINE:X86 Debug\Gizmos.obj
          Debug\Application.obj
          Debug\Board.obj
          Debug\BoardPieces.obj
@@ -19,9 +30,9 @@
          Debug\gl_core_4_4.obj
          Debug\GUI_Bar.obj
          Debug\Main.obj
-         OpenGL.vcxproj -> C:\Users\tommas.solarino\Documents\Assessment2\Checkers\Debug\OpenGL.exe
-     1>Done Building Project "C:\Users\tommas.solarino\Documents\Assessment2\Checkers\OpenGL\OpenGL.vcxproj" (Build target(s)).
+     1>LINK : fatal error LNK1104: cannot open file 'AntTweakBar.lib'
+     1>Done Building Project "D:\GitHubRepositorys\Assessment2\Checkers\OpenGL\OpenGL.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:03.87
+Time Elapsed 00:00:38.74
