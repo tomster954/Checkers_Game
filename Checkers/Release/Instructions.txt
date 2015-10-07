@@ -1,0 +1,13 @@
+StartUp:
+- Server:
+	1) Run the .exe and choose server.
+- Client:
+	1) Run the .exe and choose console and follows onscreen instructions
+
+One player must choose to be the server and the other the client. 
+Once the client has connected to the server you can play!
+
+Controlls:
+ - W,A,S,D to highlight checkers.
+ - Space to selected checker and/or move a selected checker.
+ - ESC to close the game.
