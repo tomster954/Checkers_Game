@@ -89,24 +89,36 @@ void PlayState::Draw(Camera *_camera)
 		colour = glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);
 	else
 		colour = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
-
+	
 	Gizmos::addAABBFilled(glm::vec3(70, 30, -20), glm::vec3(10, 5, 10), colour, m_project);
 
+	//m_camera->setLookAtFrom(glm::vec3(70, 150, 280), glm::vec3(70, 0, 70));
+	glm::vec3 serverCamPos = glm::vec3(300, 150, 70);
+	glm::vec3 clientCamPos = glm::vec3(-150, 150, 70);
+	glm::vec3 boardLookAt = glm::vec3(70, 0, 70);
 
+	if (m_network->IsServer())
+		_camera->setLookAtFrom(serverCamPos, boardLookAt);
+	if (!m_network->IsServer())
+		_camera->setLookAtFrom(clientCamPos, boardLookAt);
+	
 	Gizmos::draw(_camera->getProjectionView());
 }
 
 void PlayState::SelectingCheckers()
 {
-	
+	int direction = 1;
+	if (!m_network->IsServer())
+		direction = -1;
+
 	if (glfwGetKey(m_pWindow, GLFW_KEY_W) == GLFW_PRESS && m_keyPressed != true)
-		m_selectedRow -= 1;
+		m_selectedCol -= 1 * direction;
 	if (glfwGetKey(m_pWindow, GLFW_KEY_A) == GLFW_PRESS && m_keyPressed != true)
-		m_selectedCol -= 1;
+		m_selectedRow += 1 * direction;
 	if (glfwGetKey(m_pWindow, GLFW_KEY_S) == GLFW_PRESS && m_keyPressed != true)
-		m_selectedRow += 1;
+		m_selectedCol += 1 * direction;
 	if (glfwGetKey(m_pWindow, GLFW_KEY_D) == GLFW_PRESS && m_keyPressed != true)
-		m_selectedCol += 1;
+		m_selectedRow -= 1 * direction;
 
 	//Borders
 	//------------------------------------
